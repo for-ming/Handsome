@@ -1,0 +1,3 @@
+create user handsome identified by handsome default tablespace users temporary tablespace temp;
+alter user handsome quota unlimited on users;
+grant connect, resource to handsome;
