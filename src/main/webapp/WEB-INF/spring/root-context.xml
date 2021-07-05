@@ -20,4 +20,16 @@
 	p:maximumPoolSize="20"
 	/>
 		
+	<!-- userDAO start 
+	<bean id="MemberSqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="net.developia.online.dto" />
+
+	<bean id="MemberDAO"
+		class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="MemberSqlSession"
+		p:mapperInterface="net.developia.online.dao.MemberDAO" />
+	userDAO end -->
+	
 </beans>
