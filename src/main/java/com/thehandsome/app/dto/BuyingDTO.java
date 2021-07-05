@@ -5,7 +5,7 @@ import java.util.Date;
 public class BuyingDTO {
 	int userId;
 	int productId;
-	Date orderdate;
+	Date orderDate;
 	String pick;
 	int departmentId;
 }

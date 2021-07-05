@@ -1,6 +1,10 @@
 package com.thehandsome.app.dto;
 
+import lombok.Data;
+
+@Data
 public class CartDTO {
-	int userId;
-	int productId;
+	String userId;
+	String productId;
+	int quantity;
 }

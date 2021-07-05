@@ -37,7 +37,6 @@ public class DateFormatClass {
 
         cal.add(Calendar.DATE, (int) date);
         enddate = df.format(cal.getTime());
-        System.out.println(date + "일 뒤" + " date: " + df.format(cal.getTime()));
 		return enddate;
 	}
 }

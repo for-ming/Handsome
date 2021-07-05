@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!doctype html>
-<html class="no-js" lang="en">
+<html>
     <head>
         <title>더한섬닷컴 | THE HANDSOME.COM</title>
         <meta charset="utf-8">

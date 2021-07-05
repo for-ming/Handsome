@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thehandsome.app.dao.CartDAO">
+
+	<select id="getCartList" parameterType="long"
+		resultType="CartDTO">
+		<![CDATA[
+		SELECT Cart.userId, Cart.productId, Cart.quantity
+		FROM Carts
+		WHERE Cart.usetId = #{usetId}
+		]]>
+	</select>
+
+	<insert id="insertCart" parameterType="CartDTO">
+		INSERT into
+		Cart(usetId, productId, quantity)
+		VALUES(#{usetId}, #{productId}, #{quantity})
+	</insert>
+
+	<delete id="deleteCart" parameterType="CartDTO">
+		DELETE FROM Cart
+		WHERE userId = #{userId} and productId = #{productId}
+	</delete>
+
+	<update id="updateCart" parameterType="CartDTO">
+		UPDATE Cart SET
+		quantity = #{quantity}
+		where userId = #{userId} and productId = #{productId}
+	</update>
+</mapper>

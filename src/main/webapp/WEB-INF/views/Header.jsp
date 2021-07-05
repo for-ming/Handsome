@@ -34,7 +34,7 @@ String id = (String) session.getAttribute("id");
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/css/responsive.css" />
 </head>
-<body data-mobile-nav-style="classic" class="bg-black">
+<body data-mobile-nav-style="classic">
 
 	<!-- start header -->
 	<header>
@@ -198,8 +198,7 @@ String id = (String) session.getAttribute("id");
 									width="22"></a>
 								<ul class="dropdown-menu alt-font">
 									<li>바코드 스캐너를 이용해 상품을 장바구니에 등록해보세요!</li>
-									<li><img
-										src="${pageContext.request.contextPath}/resources/icon/barcode-scanner-info.png"></li>
+									<li><img src="${pageContext.request.contextPath}/resources/icon/barcode-scanner-info.png"></li>
 								</ul></li>
 							<c:if test="${empty session.id}">
 							<li class="nav-item dropdown simple-dropdown"><a href="${pageContext.request.contextPath}/login"
@@ -266,8 +265,7 @@ String id = (String) session.getAttribute("id");
 						</ul>
 					</div>
 					<div class="header-cart-icon dropdown">
-						<a href="${pageContext.request.contextPath}/cart"><i
-							class="feather icon-feather-shopping-bag"></i><span
+						<a href="${pageContext.request.contextPath}/cart"><i class="feather icon-feather-shopping-bag"></i><span
 							class="cart-count alt-font bg-fast-blue text-white">2</span></a>
 						<ul class="dropdown-menu cart-item-list">
 							<li class="cart-item align-items-center"><a

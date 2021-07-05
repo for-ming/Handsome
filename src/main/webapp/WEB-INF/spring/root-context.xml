@@ -20,16 +20,16 @@
 	p:maximumPoolSize="20"
 	/>
 		
-	<!-- userDAO start 
+	<!-- cartDAO start --> 
 	<bean id="MemberSqlSession"
 		class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="dataSource"
-		p:typeAliasesPackage="net.developia.online.dto" />
+		p:typeAliasesPackage="com.thehandsome.app.dto" />
 
-	<bean id="MemberDAO"
+	<bean id="cartDAO"
 		class="org.mybatis.spring.mapper.MapperFactoryBean"
 		p:sqlSessionFactory-ref="MemberSqlSession"
-		p:mapperInterface="net.developia.online.dao.MemberDAO" />
-	userDAO end -->
+		p:mapperInterface="com.thehandsome.app.dao.cartDAO" />
+	<!-- cartDAO end -->
 	
 </beans>

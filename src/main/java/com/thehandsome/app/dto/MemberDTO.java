@@ -1,14 +1,17 @@
 package com.thehandsome.app.dto;
 
+import lombok.Data;
+
+@Data
 public class MemberDTO {
-	int id;
+	String id;
 	String password;
 	String name;
-	String sex;
+	String gender;
 	String address;
 	String phone;
-	String RRN;
+	String registNum; // 테이블에는 regist_num으로 되어있음
 	String preferBrand;
-	String preferStore;
+	String preferDepartment;
 	
 }
