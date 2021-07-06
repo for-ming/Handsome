@@ -26,10 +26,10 @@
 		p:dataSource-ref="dataSource"
 		p:typeAliasesPackage="com.thehandsome.app.dto" />
 
-	<bean id="cartDAO"
+	<bean id="CartDAO"
 		class="org.mybatis.spring.mapper.MapperFactoryBean"
 		p:sqlSessionFactory-ref="MemberSqlSession"
-		p:mapperInterface="com.thehandsome.app.dao.cartDAO" />
+		p:mapperInterface="com.thehandsome.app.dao.CartDAO" />
 	<!-- cartDAO end -->
 	
 </beans>

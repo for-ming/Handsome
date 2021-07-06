@@ -3,19 +3,19 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thehandsome.app.dao.CartDAO">
 
-	<select id="getCartList" parameterType="long"
+	<select id="getCartList" parameterType="String"
 		resultType="CartDTO">
 		<![CDATA[
-		SELECT Cart.userId, Cart.productId, Cart.quantity
-		FROM Carts
-		WHERE Cart.usetId = #{usetId}
+		SELECT Cart.userId, Cart.productId, Cart.quantity, Cart.sizelabel, Cart.color, ProductColor.imagepath, Product.title, Product.price, Brand.name as brandName
+		FROM Cart, ProductColor, Product, Brand
+		WHERE cart.userId = #{usetId} and cart.productId like Product.id and product.brandId = brand.id and cart.productId like ProductColor.productId
 		]]>
 	</select>
 
 	<insert id="insertCart" parameterType="CartDTO">
 		INSERT into
-		Cart(usetId, productId, quantity)
-		VALUES(#{usetId}, #{productId}, #{quantity})
+		Cart(usetId, productId, quantity, color, sizelabel)
+		VALUES(#{usetId}, #{productId}, #{quantity}, #{color}, #{size})
 	</insert>
 
 	<delete id="deleteCart" parameterType="CartDTO">
@@ -25,7 +25,7 @@
 
 	<update id="updateCart" parameterType="CartDTO">
 		UPDATE Cart SET
-		quantity = #{quantity}
+		quantity = #{quantity}, color = #{color}, sizelabel = #{size}
 		where userId = #{userId} and productId = #{productId}
 	</update>
 </mapper>

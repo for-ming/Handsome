@@ -6,7 +6,6 @@ public class ProductDTO {
 	String sex;
 	String title;
 	int price;
-	String imagePath;
 	int maincategoryId;
 	int subcategoryId;
 	String shortDetail;

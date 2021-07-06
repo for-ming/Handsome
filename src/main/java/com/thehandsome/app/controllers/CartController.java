@@ -2,23 +2,16 @@ package com.thehandsome.app.controllers;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,37 +28,30 @@ public class CartController {
 	private CartService cartService;
 	
 	private static Logger logger = LoggerFactory.getLogger(CartController.class);
-/*
-	@GetMapping("/cart/{userId}")
+
+	@GetMapping("/cart")
 	@Transactional
-	public ModelAndView detail(@PathVariable(required = true) String userId, HttpSession session) {
-		ModelAndView mav = new ModelAndView("result");
+	public ModelAndView detail(HttpSession session) {
+		ModelAndView mav = new ModelAndView("Cart");
 
-		boolean already = false; 
-		boolean teacher = false; 
+		boolean isUser = false; 
 		try {
-			CartDTO cartDTO = cartService.getCartList(userId);
+			//임의로 id 지정했음 테스트용!!
+			session.setAttribute("id", "ming");
+			String userId = (String) session.getAttribute("id");
+			List<CartDTO> cartDTO = cartService.getCartList(userId);
 			HashMap<String, Object> checkmap = new HashMap<String, Object>();
-			checkmap.put("ID", session.getAttribute("id"));
-			List<LectureDTO> data = memberService.checkMemberLecture(checkmap);
-
-			for (LectureDTO dto : data) {
-				long lecture_id = dto.getId();
-				if (lecture_id == no) {
-					already = true;
-				}
+			checkmap.put("userId", session.getAttribute("id"));
+			
+			if(session.getAttribute("id") != null) {
+				isUser = true;
 			}
-
-			if (instructorDTO.getMember_id().equals(session.getAttribute("id"))) {
-				teacher = true;
-			}
-
-			mav.addObject("already", already);
-			mav.addObject("teacher", teacher);
-			mav.addObject("lectureDTO", lectureDTO);
-			mav.addObject("instructorDTO", instructorDTO);
-			mav.addObject("url", "/online/lecturedetail");
-			mav.setViewName("lectureDetail");
+			
+			System.out.println(cartDTO);
+			mav.addObject("isUser", isUser);
+			mav.addObject("cartDTO", cartDTO);
+			mav.addObject("url", "/app/cart");
+			mav.setViewName("Cart");
 		} catch (Exception e) {
 			e.printStackTrace();
 			mav.addObject("msg", e.getMessage());
@@ -74,6 +60,7 @@ public class CartController {
 		return mav;
 	}
 	
+	/*
 	@PostMapping(value = "/cart/{userId}", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public Map<String, Object> cart_list(@PathVariable("userId") String userId, @RequestBody String strjson,
@@ -81,7 +68,7 @@ public class CartController {
 		Map<String, Object> result = new HashMap<>();
 		List<CartDTO> cartlist = cartService.getCartList(userId);
 		
-		/*
+		
 		JSONObject jObject = new JSONObject(strjson);
 		int page = jObject.getInt("page");
 
