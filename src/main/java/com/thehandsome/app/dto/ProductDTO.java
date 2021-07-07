@@ -1,13 +1,16 @@
 package com.thehandsome.app.dto;
 
+import lombok.Data;
+
+@Data
 public class ProductDTO {
-	String id;
-	int brandId;
-	String sex;
-	String title;
-	int price;
-	int maincategoryId;
-	int subcategoryId;
-	String shortDetail;
-	String longDetail;
+	private String id;
+	private int brandId;
+	private String sex;
+	private String title;
+	private int price;
+	private int maincategoryId;
+	private int subcategoryId;
+	private String shortDetail;
+	private String longDetail;
 }

@@ -6,7 +6,7 @@
 	<select id="getCartList" parameterType="String"
 		resultType="CartDTO">
 		<![CDATA[
-		SELECT Cart.userId, Cart.productId, Cart.quantity, Cart.sizelabel, Cart.color, ProductColor.imagepath, Product.title, Product.price, Brand.name as brandName
+		SELECT Cart.userId, Cart.productId, Cart.quantity, Cart.sizelabel, Cart.color, ProductColor.imagepath, Brand.name as brandName
 		FROM Cart, ProductColor, Product, Brand
 		WHERE cart.userId = #{usetId} and cart.productId like Product.id and product.brandId = brand.id and cart.productId like ProductColor.productId
 		]]>

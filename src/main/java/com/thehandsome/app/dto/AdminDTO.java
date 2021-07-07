@@ -1,5 +1,18 @@
 package com.thehandsome.app.dto;
 
-public class AdminDTO {
+import java.io.Serializable;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
+import lombok.Data;
+
+@Data
+public class AdminDTO implements Serializable {
+    private String id;
+    private String password;
+    private String branchId;
+    
+    public void setPassword(String password) {
+        this.password = DigestUtils.sha512Hex(password);
+    }
 }

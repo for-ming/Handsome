@@ -1,6 +1,7 @@
 package com.thehandsome.app.controllers;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -10,13 +11,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.thehandsome.app.dto.CartDTO;
+import com.thehandsome.app.dto.DepartmentDTO;
+import com.thehandsome.app.dto.ProductDTO;
 import com.thehandsome.app.service.CartService;
+import com.thehandsome.app.service.DepartmentService;
+import com.thehandsome.app.service.ProductService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,29 +31,43 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 	
+	@Autowired
+	private DepartmentService departmentService;
+	
+	@Autowired
+	private ProductService productService;
+	
 	private static Logger logger = LoggerFactory.getLogger(CartController.class);
 
 	@GetMapping("/cart")
 	@Transactional
-	public ModelAndView detail(HttpSession session) {
+	public ModelAndView cart(HttpSession session) {
 		ModelAndView mav = new ModelAndView("Cart");
 
 		boolean isUser = false; 
 		try {
-			//¿”¿«∑Œ id ¡ˆ¡§«ﬂ¿Ω ≈◊Ω∫∆ÆøÎ!!
+			//ÏûÑÏùò session id 
 			session.setAttribute("id", "ming");
+			
 			String userId = (String) session.getAttribute("id");
 			List<CartDTO> cartDTO = cartService.getCartList(userId);
-			HashMap<String, Object> checkmap = new HashMap<String, Object>();
-			checkmap.put("userId", session.getAttribute("id"));
+			List<DepartmentDTO> departmentDTO = departmentService.getDepartmentList();
+			List<ProductDTO> productDTO = new LinkedList<>();
+			for(int i=0; i<cartDTO.size(); i++) {
+				productDTO.add(productService.getProductInfo(cartDTO.get(i).getProductId()));
+			}
+			
+			//HashMap<String, Object> checkmap = new HashMap<String, Object>();
+			//checkmap.put("userId", session.getAttribute("id"));
 			
 			if(session.getAttribute("id") != null) {
 				isUser = true;
 			}
 			
-			System.out.println(cartDTO);
 			mav.addObject("isUser", isUser);
 			mav.addObject("cartDTO", cartDTO);
+			mav.addObject("productDTO", productDTO);
+			mav.addObject("departmentDTO", departmentDTO);
 			mav.addObject("url", "/app/cart");
 			mav.setViewName("Cart");
 		} catch (Exception e) {

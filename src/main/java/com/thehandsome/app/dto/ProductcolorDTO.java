@@ -1,7 +1,7 @@
 package com.thehandsome.app.dto;
 
 public class ProductcolorDTO {
-	String productId;
-	String color;
-	String imagePath;
+	private String productId;
+	private String color;
+	private String imagePath;
 }

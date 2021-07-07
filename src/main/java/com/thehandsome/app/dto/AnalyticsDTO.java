@@ -1,9 +1,9 @@
 package com.thehandsome.app.dto;
 
 public class AnalyticsDTO {
-	int userId;
-	int productId;
-	int view;
-	int stay;
-	int time;
+	private int userId;
+	private int productId;
+	private int view;
+	private int stay;
+	private int time;
 }

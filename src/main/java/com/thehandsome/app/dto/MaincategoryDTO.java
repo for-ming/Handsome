@@ -1,7 +1,10 @@
 package com.thehandsome.app.dto;
 
+import lombok.Data;
+
+@Data
 public class MaincategoryDTO {
-	int id;
-	String name;
-	String ename;
+	private int id;
+	private String name;
+	private String ename;
 }

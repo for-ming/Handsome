@@ -1,6 +1,9 @@
 package com.thehandsome.app.dto;
 
+import lombok.Data;
+
+@Data
 public class ProductsizeDTO {
-	int productId;
-	String size;
+	private int productId;
+	private String size;
 }

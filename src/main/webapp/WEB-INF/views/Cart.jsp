@@ -6,6 +6,7 @@
 String user = (String) session.getAttribute("id");
 %>
 <c:set var="cart" value="${cartDTO}" />
+<c:set var="product" value="${productDTO}" />
 <c:set var="isUser" value="${isUser}" />
 <!doctype html>
 <html>
@@ -44,6 +45,18 @@ String user = (String) session.getAttribute("id");
   transform: translate(-50%, 50%); 
 }
 </style>
+
+<script type="text/javascript">
+function handleOnChange1(e) {
+	// 선택된 데이터의 텍스트값 가져오기
+	const text = e.options[e.selectedIndex].text;
+
+	// 선택한 텍스트 출력
+	document.getElementById('result1').innerText = text;
+	document.getElementById('result2').innerText = e.value + "원";
+}
+
+</script>
 <body data-mobile-nav-style="classic">
 	<!-- start header -->
 	<header>
@@ -96,9 +109,9 @@ String user = (String) session.getAttribute("id");
 												<td class="product-thumbnail"><a
 													href="single-product.html"><img
 														class="cart-product-image"
-														src="https://placehold.it/600x765" alt=""></a></td>
+														src="${pageContext.request.contextPath}/resources/images/product/product[0].sex/product[0].maincategoryId/product[0].subcategoryId/cart[0].imagepath" alt=""></a></td>
 												<td class="product-name"><span class="variation">${cart[0].brandName}</span>
-													<a href="single-product.html">${cart[0].title}</a> <span
+													<a href="single-product.html">${product[0].title}</a> <span
 													class="variation"> Size: ${cart[0].sizeLabel}</span> <span
 													class="variation"> Color: <div style="color: #${cart[0].color}"></div></span> <a
 													href="#" class="btn btn-fancy btn-small mr-0">옵션변경</a></td>
@@ -114,7 +127,7 @@ String user = (String) session.getAttribute("id");
 															class="btn btn-fancy btn-small mr-0">변경</a>
 													</div>
 												</td>
-												<td class="product-price" data-title="Price">${cart[0].price}</td>
+												<td class="product-price" data-title="Price">${product[0].price}</td>
 												<td class="product-name" data-title="point">5% (한섬마일리지) 0.1% (H.Point)</td>
 												<td class="product-name" data-title="option">
 												<a href="#" class="btn apply-coupon-btn text-uppercase btn-transparent-tussock">&hearts;</a>
@@ -145,7 +158,7 @@ String user = (String) session.getAttribute("id");
 									<tr>
 										<th class="w-50 font-weight-500 text-extra-dark-gray">상품
 											합계</th>
-										<td class="text-extra-dark-gray">￦405.00</td>
+										<td class="text-extra-dark-gray">￦<div id='subTotal'></div></td>
 									</tr>
 									<tr class="shipping">
 										<th class="font-weight-500 text-extra-dark-gray">수령 방법</th>
@@ -177,13 +190,13 @@ String user = (String) session.getAttribute("id");
 										</a>
 											<div id="shipping-accordion" class="address-block collapse">
 												<div class="margin-15px-top">
-													<select>
-														<option>수령 지점 선택</option>
-														<option value="online">온라인</option>
-														<option value="Afganistan">Afghanistan</option>
-														<option value="Albania">Albania</option>
-														<option value="Algeria">Algeria</option>
-													</select> <select>
+													<select id="receipt" onchange="handleOnChange1(this)">
+														<option value="none">수령 지점 선택</option>
+														<c:forEach var="departmentDTO" items="${departmentDTO}">
+														<option value="${departmentDTO.id}">${departmentDTO.name}</option>"
+														</c:forEach>
+													</select>
+													 <select>
 														<option>픽업 시간 선택</option>
 														<option value="Morning">09:00AM - 12:00PM</option>
 														<option value="Afternoon">12:00PM - 16:00PM</option>
@@ -196,7 +209,7 @@ String user = (String) session.getAttribute("id");
 									<tr class="total-amount">
 										<th class="font-weight-500 text-extra-dark-gray">합계</th>
 										<td data-title="Total">
-											<h6 class="d-block font-weight-500 mb-0 text-extra-dark-gray">￦</h6>
+											<h6 class="d-block font-weight-500 mb-0 text-extra-dark-gray">￦<div id='subTotal'></div></h6>
 											<span class="text-small text-extra-medium-gray">(3만원
 												이상 무료배송)</span>
 										</td>
@@ -213,6 +226,7 @@ String user = (String) session.getAttribute("id");
 			</div>
 		</section>
 		<!-- end section -->
+		
 		<hr>
 		<div class="middle">
 		<table>
