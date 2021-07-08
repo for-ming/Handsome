@@ -10,4 +10,5 @@ public interface CartService {
 	void insertCart(CartDTO CartDTO) throws SQLException;
 	void deleteCart(CartDTO CartDTO) throws SQLException;
 	void updateCart(CartDTO CartDTO) throws SQLException;
+	void updateQuantity(CartDTO cartDTO) throws SQLException;
 }

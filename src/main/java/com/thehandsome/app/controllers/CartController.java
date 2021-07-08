@@ -1,23 +1,26 @@
 package com.thehandsome.app.controllers;
 
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.thehandsome.app.dto.CartDTO;
 import com.thehandsome.app.dto.DepartmentDTO;
-import com.thehandsome.app.dto.ProductDTO;
 import com.thehandsome.app.service.CartService;
 import com.thehandsome.app.service.DepartmentService;
 import com.thehandsome.app.service.ProductService;
@@ -46,19 +49,12 @@ public class CartController {
 
 		boolean isUser = false; 
 		try {
-			//ÏûÑÏùò session id 
+			//¿”¿« session id 
 			session.setAttribute("id", "ming");
 			
 			String userId = (String) session.getAttribute("id");
 			List<CartDTO> cartDTO = cartService.getCartList(userId);
 			List<DepartmentDTO> departmentDTO = departmentService.getDepartmentList();
-			List<ProductDTO> productDTO = new LinkedList<>();
-			for(int i=0; i<cartDTO.size(); i++) {
-				productDTO.add(productService.getProductInfo(cartDTO.get(i).getProductId()));
-			}
-			
-			//HashMap<String, Object> checkmap = new HashMap<String, Object>();
-			//checkmap.put("userId", session.getAttribute("id"));
 			
 			if(session.getAttribute("id") != null) {
 				isUser = true;
@@ -66,7 +62,6 @@ public class CartController {
 			
 			mav.addObject("isUser", isUser);
 			mav.addObject("cartDTO", cartDTO);
-			mav.addObject("productDTO", productDTO);
 			mav.addObject("departmentDTO", departmentDTO);
 			mav.addObject("url", "/app/cart");
 			mav.setViewName("Cart");
@@ -78,40 +73,63 @@ public class CartController {
 		return mav;
 	}
 	
-	/*
-	@PostMapping(value = "/cart/{userId}", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "/cart/update/q", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public Map<String, Object> cart_list(@PathVariable("userId") String userId, @RequestBody String strjson,
-			@ModelAttribute("cart") CartDTO cartDTO) throws Exception {
-		Map<String, Object> result = new HashMap<>();
-		List<CartDTO> cartlist = cartService.getCartList(userId);
-		
+	public String comment_update(@ModelAttribute CartDTO cartDTO, @RequestBody String strjson, HttpServletRequest request, HttpSession session) throws Exception {
 		
 		JSONObject jObject = new JSONObject(strjson);
-		int page = jObject.getInt("page");
-
-		if (strjson == null)
-			page = 1;
-		PagingUtil pageUtil = new PagingUtil();
-		PageMaker pageMaker = new PageMaker();
-		pageUtil.setPage(page);
-		pageMaker.setpu(pageUtil);
-		pageMaker.setTotalCount(commentlist.size());
-
-		int max_index = pageMaker.getPageUtil().getRowEnd();
-		if (pageMaker.getPageUtil().getRowEnd() > commentlist.size())
-			max_index = commentlist.size();
-		 
+		String user = jObject.getString("user");
+		String product_id = jObject.getString("product_id");
+		String quantity = jObject.getString("quantity");
 		
+		cartDTO.setUserId((String) session.getAttribute("id"));
+		cartDTO.setProductId(product_id);
+		cartDTO.setQuantity(Integer.parseInt(quantity));
+
+		try {
+			cartService.updateQuantity(cartDTO);
+			return "Success";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	/*
+	//AJAX
+	@PostMapping(value = "/cart/list", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public Map<String, Object> cart_list(HttpSession session, @ModelAttribute("cart") CartDTO cartDTO, @ModelAttribute("product") ProductDTO productDTO) throws Exception {
+		//session¿”¿«
+		session.setAttribute("id", "ming");
+		String userId = (String) session.getAttribute("id");
+		Map<String, Object> result = new HashMap<>();
+		List<CartDTO> cartlist = cartService.getCartList(userId);
+		List<ProductDTO> productlist = new LinkedList<>();
+		for(int i=0; i<cartlist.size(); i++) {
+			productlist.add(productService.getProductInfo(cartlist.get(i).getProductId()));
+		}
+		
+		@RequestBody String strjson
+		
+		JSONObject jObject = new JSONObject(strjson);
+		int delete = jObject.getInt("delete_num");
+		
+
 		if (cartlist.isEmpty())
 			result.put("cartlist", "none");
 		else {
+			for(String key : result.keySet()){
+	            Object value = result.get(key);
+	            System.out.println(key+" : "+value);
+	        }
 			result.put("cartlist", cartlist);
+			result.put("productlist", productlist);
 		}
 		return result;
 	}
-	*/
 	
+	*/
 	/*
 	@PostMapping(value = "/classdetail/{no}/insert", produces = "application/json; charset=UTF-8")
 	public @ResponseBody String comment_insert(@PathVariable("no") long no, @RequestBody String strjson,

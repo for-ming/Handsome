@@ -45,14 +45,14 @@ String id = (String) session.getAttribute("id");
 				<div class="col-auto col-sm-6 col-lg-2 mr-auto pl-lg-0">
 					<a class="navbar-brand" href="${pageContext.request.contextPath}/">
 						<img
-						src="${pageContext.request.contextPath}/resources/icon/main_logo.png"
-						data-at2x="images/logo-white@2x.png" class="default-logo" alt="">
+						src="${pageContext.request.contextPath}/resources/icon/main_logo.png" 
+						class="default-logo" alt="">
 						<img
-						src="${pageContext.request.contextPath}/resources/icon/main_logo.png"
-						data-at2x="images/logo-white@2x.png" class="alt-logo" alt="">
+						src="${pageContext.request.contextPath}/resources/icon/main_logo.png" 
+						class="alt-logo" alt="">
 						<img
-						src="${pageContext.request.contextPath}/resources/icon/main_logo.png"
-						data-at2x="images/logo-white@2x.png" class="mobile-logo" alt="">
+						src="${pageContext.request.contextPath}/resources/icon/main_logo.png" 
+						class="mobile-logo" alt="">
 					</a>
 				</div>
 				<div class="col-auto menu-order px-lg-0">
@@ -185,9 +185,9 @@ String id = (String) session.getAttribute("id");
 										</ul>
 										<ul class="d-lg-inline-block">
 											<li class="dropdown-header"><a href="${pageContext.request.contextPath}/man/suit"><b>수트</b></a></li>
-											<li><a href="${pageContext.request.contextPath}/man/suit/dressShirt">루즈/테이퍼드</a></li>
-											<li><a href="${pageContext.request.contextPath}/man/suit/suitJacket">슬림/스트레이트</a></li>
-											<li><a href="${pageContext.request.contextPath}/man/suit/suitPants">데님</a></li>
+											<li><a href="${pageContext.request.contextPath}/man/suit/dressShirt">드레스셔츠</a></li>
+											<li><a href="${pageContext.request.contextPath}/man/suit/suitJacket">수트자켓</a></li>
+											<li><a href="${pageContext.request.contextPath}/man/suit/suitPants">수트팬츠</a></li>
 										</ul>
 									</div>
 								</div></li>

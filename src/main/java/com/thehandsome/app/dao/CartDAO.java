@@ -10,4 +10,5 @@ public interface CartDAO {
 	void insertCart(CartDTO cartDTO) throws SQLException;
 	void deleteCart(CartDTO cartDTO) throws SQLException;
 	void updateCart(CartDTO cartDTO) throws SQLException;
+	void updateQuantity(CartDTO cartDTO) throws SQLException;
 }

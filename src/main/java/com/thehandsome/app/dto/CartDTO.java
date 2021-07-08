@@ -1,7 +1,5 @@
 package com.thehandsome.app.dto;
 
-import org.apache.commons.codec.digest.DigestUtils;
-
 import lombok.Data;
 
 @Data
@@ -13,7 +11,12 @@ public class CartDTO {
 	private String color;
 	private String imagePath;
 	private String brandName;
-
+	private String title;
+	private String price;
+	private String sex;
+	private int mainCategoryId;
+	private int subCategoryId;
+	
 	public String getProductId() {
 		return productId;
 	}

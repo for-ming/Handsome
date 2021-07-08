@@ -6,9 +6,9 @@
 	<select id="getCartList" parameterType="String"
 		resultType="CartDTO">
 		<![CDATA[
-		SELECT Cart.userId, Cart.productId, Cart.quantity, Cart.sizelabel, Cart.color, ProductColor.imagepath, Brand.name as brandName
+		SELECT Cart.userId, Cart.productId, Cart.quantity, Cart.sizelabel, Cart.color, ProductColor.imagepath, Brand.name as brandName, Product.title, Product.price, Product.sex, Product.mainCategoryid, Product.subCategoryid
 		FROM Cart, ProductColor, Product, Brand
-		WHERE cart.userId = #{usetId} and cart.productId like Product.id and product.brandId = brand.id and cart.productId like ProductColor.productId
+		WHERE cart.userId = #{usetId} and cart.productId like Product.id and product.brandId = brand.id and cart.productId like ProductColor.productId and cart.color=productColor.color
 		]]>
 	</select>
 
@@ -26,6 +26,12 @@
 	<update id="updateCart" parameterType="CartDTO">
 		UPDATE Cart SET
 		quantity = #{quantity}, color = #{color}, sizelabel = #{size}
+		where userId = #{userId} and productId = #{productId}
+	</update>
+	
+	<update id="updateQuantity" parameterType="CartDTO">
+		UPDATE Cart SET
+		quantity = #{quantity}
 		where userId = #{userId} and productId = #{productId}
 	</update>
 </mapper>

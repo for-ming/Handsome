@@ -51,4 +51,14 @@ public class CartServiceImpl implements CartService {
 			throw e;
 		}
 	}
+	
+	@Override
+	public void updateQuantity(CartDTO cartDTO) throws SQLException{
+		try {
+			cartDAO.updateQuantity(cartDTO);
+		} catch (Exception e) {
+			log.info(e.toString());
+			throw e;
+		}
+	}
 }
