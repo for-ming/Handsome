@@ -13,4 +13,6 @@ public class ProductDTO {
 	private int subcategoryId;
 	private String shortDetail;
 	private String longDetail;
+	private String imagePath;
+	private int selected;
 }

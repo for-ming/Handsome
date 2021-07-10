@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 String id = (String) session.getAttribute("id");
+int totalCart = 0;
+if(id != null){
+	totalCart = (Integer) session.getAttribute("totalCart");
+}
 %>
 <!doctype html>
 <html>
@@ -265,36 +269,14 @@ String id = (String) session.getAttribute("id");
 						</ul>
 					</div>
 					<div class="header-cart-icon dropdown">
-						<a href="${pageContext.request.contextPath}/cart"><i class="feather icon-feather-shopping-bag"></i><span
-							class="cart-count alt-font bg-fast-blue text-white">2</span></a>
+						<a href="${pageContext.request.contextPath}/cart"><i class="feather icon-feather-shopping-bag"></i>
+						<% if(totalCart == 0){%><%} else {%>
+						<span class="cart-count alt-font bg-tussock text-white"> <%=totalCart%><%} %></span>
+						</a>
 						<ul class="dropdown-menu cart-item-list">
-							<li class="cart-item align-items-center"><a
-								href="javascript:void(0);" class="alt-font close">×</a>
-								<div class="product-image">
-									<a href="single-product.html"><img
-										src="https://placehold.it/150x191" class="cart-thumb" alt="" /></a>
-								</div>
-								<div class="product-detail alt-font">
-									<a href="single-product.html">Delica Omtantur</a> <span
-										class="item-ammount">$100.00</span>
-								</div></li>
-							<li class="cart-item align-items-center"><a
-								href="javascript:void(0);" class="alt-font close">×</a>
-								<div class="product-image">
-									<a href="single-product.html"><img
-										src="https://placehold.it/150x191" class="cart-thumb" alt="" /></a>
-								</div>
-								<div class="product-detail alt-font">
-									<a href="single-product.html">Gianvito Rossi</a> 
-									<span class="item-ammount">$99.99</span>
-								</div></li>
 							<li class="cart-item cart-total">
-								<div class="alt-font margin-15px-bottom">
-									<span class="w-50 d-inline-block text-medium text-uppercase">Subtotal:</span>
-									<span class="w-50 d-inline-block text-right text-medium font-weight-500">$199.99</span>
-								</div>
-								<a href="cart" class="btn btn-small btn-dark-gray">쇼핑백</a> 
-								<a href="checkout" class="btn btn-small btn-fast-blue">주문하기</a>
+								<a href="${pageContext.request.contextPath}/cart" class="btn btn-small btn-light-gray">쇼핑백</a> 
+								<a href="${pageContext.request.contextPath}/checkout" class="btn btn-small btn-tussock">주문하기</a>
 							</li>
 						</ul>
 					</div>

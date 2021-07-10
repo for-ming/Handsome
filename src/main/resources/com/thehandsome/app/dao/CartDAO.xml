@@ -14,8 +14,8 @@
 
 	<insert id="insertCart" parameterType="CartDTO">
 		INSERT into
-		Cart(usetId, productId, quantity, color, sizelabel)
-		VALUES(#{usetId}, #{productId}, #{quantity}, #{color}, #{size})
+		Cart(usetId, productId, quantity, color, sizeLabel)
+		VALUES(#{userId}, #{productId}, #{quantity}, #{color}, #{size})
 	</insert>
 
 	<delete id="deleteCart" parameterType="CartDTO">
@@ -25,7 +25,7 @@
 
 	<update id="updateCart" parameterType="CartDTO">
 		UPDATE Cart SET
-		quantity = #{quantity}, color = #{color}, sizelabel = #{size}
+		color = #{color}, sizeLabel = #{sizeLabel}
 		where userId = #{userId} and productId = #{productId}
 	</update>
 	

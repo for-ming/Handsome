@@ -10,11 +10,6 @@
         <meta name="author" content="Group3">
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
         <meta name="description" content="더한섬닷컴 | THE HANDSOME.COM">
-        <!-- favicon icon -->
-        <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png">
-        <link rel="apple-touch-icon" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-114x114.png">
         <!-- style sheets and font icons  -->
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/font-icons.min.css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/theme-vendors.min.css">

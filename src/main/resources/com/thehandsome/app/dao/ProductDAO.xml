@@ -11,5 +11,19 @@
 		]]>
 	</select>
 
+	<select id="getColorList" parameterType="String" resultType="ProductcolorDTO">
+		<![CDATA[
+		SELECT productId, color, imagepath
+		FROM ProductColor
+		WHERE ProductColor.productId like #{productId}
+		]]>
+	</select>
 	
+	<select id="getSizeList" parameterType="String" resultType="ProductsizeDTO">
+		<![CDATA[
+		SELECT productId, sizelabel
+		FROM ProductSize
+		WHERE ProductSize.productId like #{productId}
+		]]>
+	</select>
 </mapper>

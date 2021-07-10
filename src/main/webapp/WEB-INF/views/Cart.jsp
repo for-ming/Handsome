@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 String user = (String) session.getAttribute("id");
+int totalCart = 0;
+if(user != null){
+	totalCart = (Integer) session.getAttribute("totalCart");
+}
 %>
 <c:set var="cart" value="${cartDTO}" />
-<c:set var="product" value="${productDTO}" />
 <c:set var="isUser" value="${isUser}" />
 <!doctype html>
 <html>
@@ -15,100 +18,217 @@ String user = (String) session.getAttribute("id");
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="author" content="Group3">
-<meta name="viewport"
-	content="width=device-width,initial-scale=1.0,maximum-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
 <meta name="description" content="더한섬닷컴 | THE HANDSOME.COM">
+
 <!-- favicon icon -->
-<link rel="shortcut icon"
-	href="${pageContext.request.contextPath}/resources/images/favicon.png">
-<link rel="apple-touch-icon"
-	href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="72x72"
-	href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="114x114"
-	href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-114x114.png">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png">
+<link rel="apple-touch-icon" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="72x72" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-114x114.png">
+
 <!-- style sheets and font icons  -->
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/font-icons.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/theme-vendors.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/style.css" />
-<link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/resources/css/responsive.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/font-icons.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/theme-vendors.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/style.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/responsive.css" />
 
 <style>
 .middle {
 	position: absolute;
 	left: 50%;
-	top: 100%;
+	top: 200%;
 	transform: translate(-50%, 50%);
-	margin : auto;
-	padding : 10px 10px 10px 10px;
+	margin: auto; padding : 10px 10px 10px 10px;
 	clear: both;
+	padding: 10px 10px 10px 10px;
+}
+
+.hiddenRow {
+    padding: 0 !important;
 }
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <script>
-
-$(function() {
 	
-});
-
-function handleOnChange1(e) {
-	// 선택된 데이터의 텍스트값 가져오기
-	const text = e.options[e.selectedIndex].text;
-
-	// 선택한 텍스트 출력
-	document.getElementById('result1').innerText = text;
-	document.getElementById('result2').innerText = e.value + "원";
-}
-
-function update_q(this){
-	var user = '<%=(String) session.getAttribute("id")%>';
-	var product_id = $(this).val();
-	var quantity = $("#quantity"+product_id).val();
+	$(function() {
+		noneDisplay();
+	});
 	
-	$("#update_q").attr('disabled', 'disabled');
-	
-	Swal.fire({ 
-		title: '수량을 변경하시겠습니까?', 
-		text: "", 
-		icon: 'warning', 
-		showCancelButton: true, 
-		confirmButtonColor: '#a1d1ff', 
-		cancelButtonColor: '#fa7373', 
-		confirmButtonText: '확인', 
-		cancelButtonText: '취소' 
-	}).then((result) => { 
-		if (result.isConfirmed) { 
-			$.ajax({ 
-				type : "post", 
-				url : "<c:url value='/cart/update/q'/>", 
-				headers : { "Content-type" : "application/json", "X-HTTP-Method-Override" : "POST" }, 
-				data : JSON.stringify({ user :user, product_id : product_id, quantity : quantity}), 
-				success : function (result) { 
-					if (result == "Success") {
-						//e.preventDefault();
-						Swal.fire( '수정되었습니다.', '', 'success' )
-					}
-					$("#updatecmt").attr('disabled', false);
-				},
-				dataType: "text",
-				contentType: "application/json"
-			});
-		} 
-		else{
-			$("#updatecmt").attr('disabled', false);
-			return;
+	function noneDisplay(){
+		var cartNum = '<%=totalCart%>';
+		if(cartNum == 0){
+			document.getElementById('cart_table_none').innerText = "쇼핑백에 담긴 상품이 없습니다.";
 		}
-	})
-}
-</script>
+	}
+	
+	function moneyDisplay(price) {
+		var money= price;
+		money.toLocaleString();
+		document.getElementById(this).innerText = money;
+	}
+	
+	function itemSum(itemForm)
+	{
+	   var sum = 0;
+	   var quantity = 0;
+	   var checked = 0;
+	   var count = itemForm.checkProduct.length;
+	   
+	   $("input[name=checkProduct]:checked").each(function(index, item){
+		   quantity = $(item).attr("value2");
+		   sum += $(item).attr("value") * $(item).attr("value2");
+		   checked++;
+	   });  
+	   
+	   sum = sum.toLocaleString();
+	   
+	   if(sum < 30000){
+		   document.getElementById('Total').innerText = '￦ ' + sum + 3000;
+	   }
+	   
+	   if(count != checked){
+		   itemForm.all.checked = false;
+	   }
+	   
+	   document.getElementById('subTotal').innerText = '￦ ' + sum;
+	   document.getElementById('Total').innerText = '￦ ' + sum;
+	}
+	
+	function selectAll(all)  {
+		  const checkboxes = document.getElementsByName('checkProduct');
+		  
+		  checkboxes.forEach((checkbox) => {
+		    checkbox.checked = all.checked;
+		  })
+		  
+		  itemSum(all.form);
+		}
+	
+	function update_q(pid){
+		var user = '<%=(String) session.getAttribute("id")%>';
+		var product_id = pid;
+		var quantity = $("#quantity"+product_id).val();
+		$("#update_q").attr('disabled', 'disabled');
+		
+		Swal.fire({ 
+			title: '수량을 변경하시겠습니까?', 
+			text: "", 
+			icon: 'warning', 
+			showCancelButton: true, 
+			confirmButtonColor: '#a1d1ff', 
+			cancelButtonColor: '#fa7373', 
+			confirmButtonText: '확인', 
+			cancelButtonText: '취소' 
+		}).then((result) => { 
+			if (result.isConfirmed) { 
+				$.ajax({ 
+					type : "post", 
+					url : "<c:url value='/cart/update/q'/>", 
+					headers : { "Content-type" : "application/json", "X-HTTP-Method-Override" : "POST" }, 
+					data : JSON.stringify({ user : user, product_id : product_id, quantity : quantity}), 
+					success : function (result) { 
+						if (result == "Success") {
+							Swal.fire( '변경되었습니다.', '', 'success' )
+						}
+						$("#updatecmt").attr('disabled', false);
+					},
+					dataType: "text",
+					contentType: "application/json"
+				});
+			} 
+			else{
+				$("#updatecmt").attr('disabled', false);
+				return;
+			}
+		})
+	}
+	
+	function update(pid){
+		var user = '<%=(String) session.getAttribute("id")%>';
+		var product_id = pid;
+	
+		$.ajax({ 
+			type : 'POST',
+			url : "<c:url value='/cart/update'/>", 
+			headers : { "Content-type" : "application/json", "X-HTTP-Method-Override" : "POST" },
+			data : JSON.stringify({ user : user, product_id : product_id }), 
+			dataType: "json",
+			contentType: "application/json",
+			success : function (data) { 
+				var c_html = "";
+				var s_html = "";
+				var colorlist = data.colorlist;
+				var sizelist = data.sizelist;
+				for(var i in colorlist){
+					c_html += "<li><input class='d-none' type='radio' id='color" + data.colorlist[i].color + "' name = 'color' value ='" + data.colorlist[i].color;
+					if(i == 0)
+						c_html += "' checked />";
+					else 
+						c_html += "' />";
+					c_html += "<label for='color"+data.colorlist[i].color+"'> <span style='background-color: #";
+					c_html += data.colorlist[i].color;
+					c_html += "'></span></label></li>";
+				}
+				
+				for(var i in sizelist){
+					s_html += "<li><input class='d-none' type='radio' id='size"+data.sizelist[i].sizelabel+"' name = 'size' value = '"+ data.sizelist[i].sizelabel;
+					if(i == 0)
+						s_html += "' checked/>";
+					else 
+						s_html += "'/>";
+					s_html += "<label for='size"+ data.sizelist[i].sizelabel +"' class='width-80'><span>"+ data.sizelist[i].sizelabel +"</span></label></li>";
+				}
+				
+				var html = "";
+				html += "<form id='color_and_size' action='${pageContext.request.contextPath}/cart/update/"+ pid +"' method='post'>";
+				html += "<div class='xs-padding-six-all'>";
+				html += "<b>상품 옵션 변경</b>";
+				html += "<div class='margin-10px-bottom'>";
+				html += "<label class='text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px'>color</label>";
+				html += "<ul class='alt-font shop-color'>";
+				html += c_html;
+				html += "</ul><br>";
+				html += "<label class='text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px'>Size</label>";
+				html += "<ul class='text-extra-small shop-size'>";
+				html += s_html;
+				html += "</ul><br>";
+				html += "<button class='btn btn-fancy btn-very-small btn-transparent-light-gray' type='submit' onclick='";
+				html += "location.replace('${pageContext.request.contextPath}/cart')";
+				html += "'>변경</button>";
+				html += "<button class='btn btn-fancy btn-very-small btn-transparent-light-gray' type='button' onclick='location.reload();'>취소</button>";
+				html += "</div></div></form>";
+				
+				$("#update_option_form_"+pid).html(html);
+			}
+		});
+	}
+	
 
+	function delete_product(pid){
+		var user = '<%=(String) session.getAttribute("id")%>';
+		var product_id = pid;
+		
+		$.ajax({ 
+			type : "post", 
+			url : "<c:url value='/cart/delete'/>", 
+			headers : { "Content-type" : "application/json", "X-HTTP-Method-Override" : "POST" }, 
+			data : JSON.stringify({ user : user, product_id : product_id }), 
+			dataType: "text",
+			contentType: "application/json",
+			success : function (result) { 
+						
+					  }
+		});
+	}
+	
+	</script>
 </head>
 
 <body data-mobile-nav-style="classic">
@@ -132,20 +252,17 @@ function update_q(this){
 	<section class="wow animate__fadeIn">
 		<div class="container">
 			<div class="row">
-				<div
-					class="col-lg-8 padding-70px-right lg-padding-30px-right md-padding-15px-right">
+				<div class="col-lg-8 padding-70px-right lg-padding-30px-right md-padding-15px-right">
 					<div class="row align-items-center">
-						<div class="col-12">
-							<table
-								class="table cart-products margin-60px-bottom md-margin-40px-bottom sm-no-margin-bottom">
+						<div class="col-12" id="cart_table">
+							<table class="table cart-products margin-60px-bottom md-margin-40px-bottom sm-no-margin-bottom">
 								<form method="get" action="#">
 									<thead>
 										<div>
-											<span>*4PM 상품은 오후 4시 이후 주문 시 일반 택배 상품으로 발송됩니다.<br></span>
+											<span>* 4PM 상품은 오후 4시 이후 주문 시 일반 택배 상품으로 발송됩니다.<br></span>
 										</div>
 										<tr>
-											<th scope="col" class="alt-font"><label><input
-													type="checkbox" name="all" value="all"></label></th>
+											<th scope="col" class="alt-font"><label><input type="checkbox" name="all" value="all" onclick="selectAll(this);"></label></th>
 											<th scope="col" class="alt-font"></th>
 											<th scope="col" class="alt-font">상품정보</th>
 											<th scope="col" class="alt-font">수량</th>
@@ -157,101 +274,102 @@ function update_q(this){
 									</thead>
 									<tbody>
 										<c:forEach var="cart" items="${cartDTO}" varStatus="status">
-										<tr>
-											<td><label><input type="checkbox"
-													name="checkProduct" value="checkProduct"></label></td>
-											<td class="product-thumbnail"><a
-												href="#"><img
-													class="cart-product-image"
-													src="${pageContext.request.contextPath}/resources/images/product/${cart.sex}/${cart.mainCategoryId}/${cart.subCategoryId}/${cart.imagePath}.jpg"
-													alt=""></a></td>
-											<td class="product-name"><span class="variation"><label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">${cart.brandName}</label></span>
-												<a href="single-product.html">${cart.title}</a> <span
-												class="variation">
-													<div class="margin-4-rem-bottom">
-														<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">Size</label>
-														<ul class="text-extra-small shop-size">
-															<li><input class="d-none" type="radio" id="size-1" name="size" checked /> 
-															<label for="size-1" lass="width-80"><span>${cart.sizeLabel}</span></label></li>
-														</ul>
+											<tr>
+												<td>
+													<label><input type="checkbox" id="check_${cart.productId}" name="checkProduct" value="${cart.price}" value2 ="${cart.quantity}" onClick="itemSum(this.form);"></label>
+												</td>
+												<td class="product-thumbnail">
+													<a href="#"><img class="cart-product-image" src="${pageContext.request.contextPath}/resources/images/product/${cart.sex}/${cart.mainCategoryId}/${cart.subCategoryId}/${cart.imagePath}.jpg" alt=""></a>
+												</td>
+												<td class="product-name">
+													<a href="single-product.html">
+													<span class="variation">
+													<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">${cart.brandName}</label>
+													</span>
+													<span class="variation">
+													<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">${cart.title}</label>
+													</span>
+													</a> 
+													<span class="variation">
+														<div class="margin-4-rem-bottom">
+															<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">Size</label>
+															<ul class="text-extra-small shop-size">
+																<li><input class="d-none" type="radio" id="size-1" name="size"/>
+																<label for="size-1"	lass="width-80"><span>${cart.sizeLabel}</span></label>
+																</li>
+															</ul>
+														</div>
+													</span> 
+													<span class="variation">
+														<div class="margin-20px-bottom">
+															<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">color</label>
+															<ul class="alt-font shop-color">
+																<li><input class="d-none" type="radio" id="color-1" name="color"/> 
+																<label for="color-1"> <span style="background-color: #${cart.color} "></span></label>
+																</li>
+															</ul>
+														</div>
+													</span>
+													<button type="button" data-target="#update_option_${cart.productId}" class="btn btn-fancy btn-small mr-0 accordion-toggle" data-toggle="collapse" onclick="update('${cart.productId}');">옵션변경</button>
+												</td>
+												<td class="product-quantity" data-title="Quantity">
+													<div class="quantity">
+														<input type="button" value="-" class="qty-minus qty-btn" data-quantity="minus" data-field="quantity"> 
+														<input class="input-text qty-text" id="quantity${cart.productId}" type="number" name="quantity" value="${cart.quantity}"> 
+														<input type="button" value="+" class="qty-plus qty-btn" data-quantity="plus" data-field="quantity">
+														<button class="btn btn-fancy btn-small mr-0" type="button" id="update_q${cart.productId}" onclick="update_q('${cart.productId}');">변경</button>
 													</div>
-											</span> <span class="variation">
-													<div class="margin-20px-bottom">
-														<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">color</label>
-														<ul class="alt-font shop-color">
-															<li><input class="d-none" type="radio" id="color-1" name="color" checked /> 
-															<label for="color-1"> <span style="background-color: #${cart.color}"></span> </label>
-															</li>
-														</ul>
-													</div>
-											</span> <a href="#" class="btn btn-fancy btn-small mr-0">옵션변경</a></td>
-											<td class="product-quantity" data-title="Quantity">
-												<div class="quantity">
-													<label class="screen-reader-text">수량</label> 
-													<input type="button" value="-" class="qty-minus qty-btn" data-quantity="minus" data-field="quantity">
-													<input class="input-text qty-text" id="quantity${cart.productId}" type="number" name="quantity" value="${cart.quantity}">
-													<input type="button" value="+" class="qty-plus qty-btn" data-quantity="plus" data-field="quantity">
-													<button class="btn btn-fancy btn-small mr-0" id="update_q" onclick="update_q(this)" value="${cart.productId}">변경</button>
-												</div>
-											</td>
-											<td class="product-price" data-title="Price">${cart.price}</td>
-											<td class="product-name" data-title="point">5% (한섬마일리지)
-												0.1% (H.Point)</td>
-											<td class="product-name" data-title="option"><a href="#"
-												class="btn apply-coupon-btn text-uppercase btn-transparent-tussock">&hearts;</a>
-											</td>
-											<td><a href="#"
-												class="btn apply-coupon-btn text-uppercase">&times;</a></td>
-										</tr>
+												</td>
+												<td class="product-price" data-title="price"><label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">￦${cart.price}</label></td>
+												<td class="product-name" data-title="point"><label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">5% (한섬마일리지) 0.1% (H.Point)</label></td>
+												<td><a href="#"	class="btn apply-coupon-btn text-uppercase btn-transparent-tussock">&hearts;</a></td>
+												<td><a href=""	class="btn apply-coupon-btn text-uppercase" onclick="delete_product('${cart.productId}');">&times;</a></td>
+												</tr>
+												<!-- start update option -->
+												<tr><td colspan="8" class="hiddenRow">
+												<div id ="update_option_${cart.productId}" class="collapse accordian-body">
+													<div id = "update_option_form_${cart.productId}"></div>
+							                    </div>
+							                	<!-- end update option -->
+							                	</td>
+							                	</tr>
 										</c:forEach>
+										<tr><td colspan="8" class="hiddenRow">
+										<div id ="cart_table_none"></div>
+					                	</td>
+					                	</tr>
 									</tbody>
 								</form>
 							</table>
 						</div>
-						<div
-							class="col-md-6 text-center text-md-right md-margin-50px-bottom btn-dual">
-							<a href="#"
-								class="btn btn-fancy btn-small btn-transparent-light-gray">선택
-								상품 삭제</a> <a href="#"
-								class="btn btn-fancy btn-small btn-transparent-light-gray mr-0">선택
-								상품 주문하기</a>
-						</div>
 					</div>
 				</div>
 				<div class="col-lg-4">
-					<div
-						class="bg-light-gray padding-50px-all lg-padding-30px-tb lg-padding-20px-lr md-padding-20px-tb">
-						<span
-							class="alt-font text-large text-extra-dark-gray margin-15px-bottom d-inline-block font-weight-500">Totals</span>
+					<div class="bg-light-gray padding-50px-all lg-padding-30px-tb lg-padding-20px-lr md-padding-20px-tb">
+						<span class="alt-font text-large text-extra-dark-gray margin-15px-bottom d-inline-block font-weight-500">Totals</span>
 						<table class="w-100 total-price-table">
 							<tbody>
 								<tr>
-									<th class="w-50 font-weight-500 text-extra-dark-gray">상품
-										합계</th>
-									<td class="text-extra-dark-gray">￦
-										<div id='subTotal'></div>
+									<th class="w-50 font-weight-500 text-extra-dark-gray">상품 합계</th>
+									<td class="text-extra-dark-gray">
+									<div id='subTotal'>￦ </div>
 									</td>
 								</tr>
 								<tr class="shipping">
 									<th class="font-weight-500 text-extra-dark-gray">수령 방법</th>
 									<td data-title="Shipping">
-										<ul
-											class="float-lg-left float-right text-left line-height-36px">
+										<ul class="float-lg-left float-right text-left line-height-36px">
 											<li class="d-flex align-items-center md-margin-15px-bottom">
-												<input id="free_shipping" type="radio"
-												name="shipping-option"
-												class="d-block w-auto margin-10px-right mb-0"
-												checked="checked"> <label
-												class="md-line-height-18px" for="free_shipping">일반
-													택배</label>
+												<input id="free_shipping" type="radio" name="shipping-option" class="d-block w-auto margin-10px-right mb-0" checked="checked">
+												 <label class="md-line-height-18px" for="free_shipping">일반 택배</label>
 											</li>
-											<li class="d-flex align-items-center"><input
-												id="local_pickup" type="radio" name="shipping-option"
-												class="d-block w-auto margin-10px-right mb-0"> <label
-												class="md-line-height-18px" for="local_pickup">매장 수령</label></li>
+											<li class="d-flex align-items-center">
+											<input id="local_pickup" type="radio" name="shipping-option" class="d-block w-auto margin-10px-right mb-0"> 
+											<label class="md-line-height-18px" for="local_pickup">매장 수령</label></li>
 										</ul>
 									</td>
 								</tr>
+								<!-- 
 								<tr class="calculate-shipping">
 									<th colspan="2" class="font-weight-500"><a
 										class="d-block calculate-shipping-title accordion-toggle"
@@ -276,21 +394,19 @@ function update_q(this){
 											</div>
 										</div></th>
 								</tr>
+								-->
 								<tr class="total-amount">
 									<th class="font-weight-500 text-extra-dark-gray">합계</th>
 									<td data-title="Total">
 										<h6 class="d-block font-weight-500 mb-0 text-extra-dark-gray">
-											￦
-											<div id='subTotal'></div>
-										</h6> <span class="text-small text-extra-medium-gray">(3만원
-											이상 무료배송)</span>
+											<div id='Total'> ￦ </div>
+										</h6> <span class="text-small text-extra-medium-gray">(3만원 이상 무료배송)</span>
 									</td>
 								</tr>
 							</tbody>
 						</table>
 						<div>
-							<a href="checkout"
-								class="btn btn-dark-gray btn-large d-block btn-fancy margin-15px-top">주문하기</a>
+							<a href="checkout" class="btn btn-dark-gray btn-large d-block btn-fancy margin-15px-top">선택상품 주문하기</a>
 						</div>
 					</div>
 				</div>
@@ -302,18 +418,13 @@ function update_q(this){
 	<hr>
 	<div class="middle">
 		<table>
-			<b
-				class="text-extra-dark-gray no-margin-bottom text-center text-lg-left">PROMOTION
-				혜택</b>
-			<br>
-			<br>
+			<b class="text-extra-dark-gray no-margin-bottom text-center text-lg-left">PROMOTION 혜택</b>
 			<th><strong>혜택 1 / 300,000원 이상 구매하신 고객님께 사은품을 드립니다. </strong></th>
 			<th><strong>혜택 2 / 100,000원 이상 구매하신 고객님께 사은품을 드립니다. </strong></th>
 			<tr>
 				<td>
 					<ul>
-						<img
-							src="${pageContext.request.contextPath}/resources/icon/sample1.png">
+						<img src="${pageContext.request.contextPath}/resources/icon/sample1.png">
 						<li>사은품 : SYSTEM 블랙 스트링 브레이스릿</li>
 						<li>SYSTEM 온라인 익스클루시브 주얼리 포함 시스템 (정상) 실결제 30만원 이상 구매하신 고객님께
 							"SYSTEM 블랙 스트링 브레이스릿"을 드립니다. <br>기간 : 07월 01일 ~ 07월 18일<br>*아울렛
@@ -324,8 +435,7 @@ function update_q(this){
 				</td>
 				<td>
 					<ul>
-						<img
-							src="${pageContext.request.contextPath}/resources/icon/sample2.png">
+						<img src="${pageContext.request.contextPath}/resources/icon/sample2.png">
 						<li>사은품 : BEIGIC 5/10만원 구매 시 머그/머그+로션</li>
 						<li>더캐시미어띵즈 내 BEIGIC 상품을 5/10만원 이상 구매하신 고객님께 "머그/머그+로션 30ml"를
 							드립니다.<br>기간 : 06월 23일~소진 시 까지<br>*5만원 이상~10만원 미만 구매
@@ -339,8 +449,7 @@ function update_q(this){
 			<tr>
 				<td>
 					<ul>
-						<img
-							src="${pageContext.request.contextPath}/resources/icon/sample3.png">
+						<img src="${pageContext.request.contextPath}/resources/icon/sample3.png">
 						<li>사은품 : BEIGIC 바디로션 2매</li>
 						<li>더캐시미어띵즈 내 BEIGIC 상품을 구매하신 고객님께 "바디로션 7ml 2매"를 드립니다.<br>기간
 							: 06월 23일~소진 시 까지<br>*BEIGIC 상품 필수 구매<br>사은품은 주문하신 상품과
@@ -352,8 +461,7 @@ function update_q(this){
 		</table>
 		<hr>
 		<table>
-			<th
-				class="text-extra-dark-gray no-margin-bottom text-center text-lg-left">쇼핑백
+			<th class="text-extra-dark-gray no-margin-bottom text-center text-lg-left">쇼핑백
 				이용안내</th>
 			<th></th>
 			<tr>
@@ -387,9 +495,8 @@ function update_q(this){
 		class="feather icon-feather-arrow-up"></i></a>
 	<!-- end scroll to top -->
 	<!-- javascript -->
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/js/theme-vendors.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/theme-vendors.min.js"></script>
+
 </body>
 </html>

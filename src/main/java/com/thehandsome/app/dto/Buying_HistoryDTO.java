@@ -1,9 +1,11 @@
 package com.thehandsome.app.dto;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class Buying_HistoryDTO {
+public class Buying_HistoryDTO implements Serializable{
 	private int id;
 	private String memberId;
 	private String productId;

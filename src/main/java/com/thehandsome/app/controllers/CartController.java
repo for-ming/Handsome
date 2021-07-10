@@ -1,6 +1,8 @@
 package com.thehandsome.app.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,15 +14,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.thehandsome.app.dto.CartDTO;
 import com.thehandsome.app.dto.DepartmentDTO;
+import com.thehandsome.app.dto.ProductcolorDTO;
+import com.thehandsome.app.dto.ProductsizeDTO;
 import com.thehandsome.app.service.CartService;
 import com.thehandsome.app.service.DepartmentService;
 import com.thehandsome.app.service.ProductService;
@@ -49,12 +56,13 @@ public class CartController {
 
 		boolean isUser = false; 
 		try {
-			//¿”¿« session id 
+			//ÏûÑÏùò session id 
 			session.setAttribute("id", "ming");
 			
 			String userId = (String) session.getAttribute("id");
 			List<CartDTO> cartDTO = cartService.getCartList(userId);
 			List<DepartmentDTO> departmentDTO = departmentService.getDepartmentList();
+			total_cart(session);
 			
 			if(session.getAttribute("id") != null) {
 				isUser = true;
@@ -73,9 +81,51 @@ public class CartController {
 		return mav;
 	}
 	
+	public void total_cart(HttpSession session) throws Exception{
+		String userId = (String) session.getAttribute("id");
+		List<CartDTO> cartDTO = cartService.getCartList(userId);
+		session.setAttribute("totalCart", cartDTO.size());
+	}
+	
+	@PostMapping(value = "/cart/update", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public Map<String, Object> cart_update(@ModelAttribute CartDTO cartDTO, @RequestBody String strjson, HttpServletRequest request, HttpSession session) throws Exception {
+		Map<String, Object> result = new HashMap<>();
+		
+		JSONObject jObject = new JSONObject(strjson);
+		String user = jObject.getString("user");
+		String product_id = jObject.getString("product_id");
+		
+		List<ProductcolorDTO> colorDTO = productService.getColorList(product_id);
+		List<ProductsizeDTO> sizeDTO = productService.getSizeList(product_id);
+		result.put("colorlist", colorDTO);
+		result.put("sizelist", sizeDTO);
+		
+		return result;
+	}
+	
+	@PostMapping(value = "/cart/update/{product_id}")
+	public RedirectView cart_update_option(@PathVariable("product_id") String product_id, @ModelAttribute CartDTO cartDTO, @RequestParam(value="color") String color, @RequestParam(value="size") String size, HttpServletRequest request, HttpSession session) throws Exception {
+
+		String sizelabel = size;
+		
+		cartDTO.setUserId((String) session.getAttribute("id"));
+		cartDTO.setProductId(product_id);
+		cartDTO.setColor(color);
+		cartDTO.setSizeLabel(sizelabel);
+
+		try {
+			cartService.updateCart(cartDTO);
+			return new RedirectView("/app/cart");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	@PostMapping(value = "/cart/update/q", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public String comment_update(@ModelAttribute CartDTO cartDTO, @RequestBody String strjson, HttpServletRequest request, HttpSession session) throws Exception {
+	public String cart_update_quantity(@ModelAttribute CartDTO cartDTO, @RequestBody String strjson, HttpServletRequest request, HttpSession session) throws Exception {
 		
 		JSONObject jObject = new JSONObject(strjson);
 		String user = jObject.getString("user");
@@ -85,7 +135,7 @@ public class CartController {
 		cartDTO.setUserId((String) session.getAttribute("id"));
 		cartDTO.setProductId(product_id);
 		cartDTO.setQuantity(Integer.parseInt(quantity));
-
+		
 		try {
 			cartService.updateQuantity(cartDTO);
 			return "Success";
@@ -95,41 +145,24 @@ public class CartController {
 		}
 	}
 	
-	/*
-	//AJAX
-	@PostMapping(value = "/cart/list", produces = "application/json; charset=UTF-8")
-	@ResponseBody
-	public Map<String, Object> cart_list(HttpSession session, @ModelAttribute("cart") CartDTO cartDTO, @ModelAttribute("product") ProductDTO productDTO) throws Exception {
-		//session¿”¿«
-		session.setAttribute("id", "ming");
-		String userId = (String) session.getAttribute("id");
-		Map<String, Object> result = new HashMap<>();
-		List<CartDTO> cartlist = cartService.getCartList(userId);
-		List<ProductDTO> productlist = new LinkedList<>();
-		for(int i=0; i<cartlist.size(); i++) {
-			productlist.add(productService.getProductInfo(cartlist.get(i).getProductId()));
-		}
-		
-		@RequestBody String strjson
-		
-		JSONObject jObject = new JSONObject(strjson);
-		int delete = jObject.getInt("delete_num");
-		
+	@PostMapping(value = "/cart/delete", produces = "application/json; charset=UTF-8")
+	public RedirectView cart_delete(@ModelAttribute CartDTO cartDTO, @RequestBody String strjson, HttpServletRequest request, HttpSession session) throws Exception {
 
-		if (cartlist.isEmpty())
-			result.put("cartlist", "none");
-		else {
-			for(String key : result.keySet()){
-	            Object value = result.get(key);
-	            System.out.println(key+" : "+value);
-	        }
-			result.put("cartlist", cartlist);
-			result.put("productlist", productlist);
+		JSONObject jObject = new JSONObject(strjson);
+		String user = jObject.getString("user");
+		String product_id = jObject.getString("product_id");
+
+		cartDTO.setUserId(user);
+		cartDTO.setProductId(product_id);
+
+		try {
+			cartService.deleteCart(cartDTO);
+			return new RedirectView("/app/cart");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
-		return result;
 	}
-	
-	*/
 	/*
 	@PostMapping(value = "/classdetail/{no}/insert", produces = "application/json; charset=UTF-8")
 	public @ResponseBody String comment_insert(@PathVariable("no") long no, @RequestBody String strjson,
@@ -165,59 +198,7 @@ public class CartController {
 		}
 
 	}
+*/
 
-	@PostMapping(value = "/classdetail/{no}/update", produces = "application/json; charset=UTF-8")
-	@ResponseBody
-	public String comment_update(@ModelAttribute CommentDTO commentDTO, @PathVariable("no") long no,
-			@RequestBody String strjson, HttpServletRequest request, HttpSession session) throws Exception {
-
-		JSONObject jObject = new JSONObject(strjson);
-		String cno = jObject.getString("cno");
-		String comment_user = jObject.getString("comment_user");
-		String login_user = (String) session.getAttribute("name");
-		String content_fix = jObject.getString("content_fix");
-
-		commentDTO.setNo(Long.parseLong(cno));
-		commentDTO.setMember_id((String) session.getAttribute("id"));
-		commentDTO.setLecture_id(no);
-		commentDTO.setContent(content_fix);
-
-		try {
-			if (login_user.equals(comment_user) == true) {
-				commentService.updateComment(commentDTO);
-				return "Success";
-			} else
-				return "False"; 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@PostMapping(value = "/classdetail/{no}/delete", produces = "application/json; charset=UTF-8")
-	@ResponseBody
-	public String comment_delete(@ModelAttribute CommentDTO commentDTO, @PathVariable("no") long no,
-			@RequestBody String strjson, HttpServletRequest request, HttpSession session) throws Exception {
-
-		JSONObject jObject = new JSONObject(strjson);
-		String content_no = jObject.getString("cno");
-		String content_name = jObject.getString("user_check");
-		String me = (String) session.getAttribute("name");
-
-		commentDTO.setNo(Long.parseLong(content_no));
-		commentDTO.setMember_id((String) session.getAttribute("id"));
-
-		try {
-			if (me.equals(content_name) == true) {
-				commentService.deleteComment(commentDTO);
-				return "Success";
-			} else
-				return "False";
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-
-	}
-	*/
+	
 }

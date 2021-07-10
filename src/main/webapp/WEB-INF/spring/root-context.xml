@@ -49,5 +49,17 @@
 		p:sqlSessionFactory-ref="ProductSqlSession"
 		p:mapperInterface="com.thehandsome.app.dao.ProductDAO" />
 	<!-- ProductDAO end -->
+	
+	<!-- MemberDAO start -->
+	<bean id="MemberSqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="com.thehandsome.app.dto" />
+		
+	<bean id="MemberDAO"
+		class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="MemberSqlSession"
+		p:mapperInterface="com.thehandsome.app.dao.MemberDAO" />
+	<!-- MemberDAO end -->
 
 </beans>

@@ -567,23 +567,37 @@
                     <!-- end title -->
                     <div class="col-12 col-xl-4 col-lg-8 col-md-10 text-center">
                         <h6 class="font-weight-300 margin-eight-bottom sm-margin-30px-bottom">We would love to hear about start your new project.</h6>
-                        <a href="#contact-form" class="btn btn-medium btn-round-edge btn-fast-blue popup-with-form">Start New Projects</a>
+                        <a href="#update_option" class="btn btn-medium btn-round-edge btn-fast-blue popup-with-form">Start New Projects</a>
+                        
+                        
                         <!-- start contact form -->
-                        <form id="contact-form" action="email-templates/contact-form.php" method="post" class="white-popup-block col-xl-4 col-lg-7 col-sm-9  p-0 mx-auto mfp-hide">
+                        <form id="update_option" action="#" method="post" class="white-popup-block col-xl-4 col-lg-7 col-sm-9  p-0 mx-auto mfp-hide">
                             <div class="padding-fifteen-all bg-white border-radius-6px xs-padding-six-all">
-                                <h6 class="text-extra-dark-gray font-weight-500 margin-35px-bottom xs-margin-15px-bottom">Looking for a excellent business idea?</h6> 
+                                <h6 class="text-extra-dark-gray font-weight-500 margin-35px-bottom xs-margin-15px-bottom">상품 옵션 변경</h6> 
                                 <div>
                                     <input class="medium-input margin-25px-bottom xs-margin-10px-bottom required" type="text" name="name" placeholder="Your name">
-                                    <input class="medium-input margin-25px-bottom xs-margin-10px-bottom required" type="email" name="email" placeholder="Your email address">
-                                    <input class="medium-input margin-25px-bottom xs-margin-10px-bottom" type="tel" name="phone" placeholder="Your mobile">
-                                    <textarea class="medium-textarea xs-h-100px xs-margin-10px-bottom" rows="6" name="comment" placeholder="Your message"></textarea>
-                                    <input type="hidden" name="redirect" value="">
-                                    <button class="btn btn-medium btn-gradient-sky-blue-pink mb-0 submit" type="submit">Send Message</button>
-                                    <div class="form-results d-none"></div>
+                                    <div class="margin-20px-bottom">
+                                    <label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">color</label>
+                                   <ul class="alt-font shop-color">
+										<li><input class="d-none" type="radio" id="color-1" name="color"/> 
+										</li>
+									</ul>
+                                	
+                                   <label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">Size</label>
+                                    <ul class="text-extra-small shop-size">
+										<li><input class="d-none" type="radio" id="${cart.sizeLabel}" name="size"/>
+										</li>
+									</ul>
+                                    <button class="btn btn-medium btn-gradient-sky-blue-pink mb-0 submit" type="submit">변경</button>
+                                    <button class="btn btn-medium btn-gradient-sky-blue-pink mb-0 submit" type="cancle">취소</button>
                                 </div>
                             </div>
                         </form>
                         <!-- end contact form -->
+                        
+                        
+                        
+                        
                     </div>
                 </div>
             </div>
