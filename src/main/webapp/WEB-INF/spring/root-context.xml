@@ -62,4 +62,53 @@
 		p:mapperInterface="com.thehandsome.app.dao.MemberDAO" />
 	<!-- MemberDAO end -->
 
+	<!-- Buying_HistoryDAO start -->
+	<bean id="Buying_HistorySqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="com.thehandsome.app.dto" />
+		
+	<bean id="Buying_HistoryDAO"
+		class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="Buying_HistorySqlSession"
+		p:mapperInterface="com.thehandsome.app.dao.Buying_HistoryDAO" />
+	<!-- Buying_HistoryDAO end -->
+	
+	<!-- StockDAO start -->
+	<bean id="StockSqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="com.thehandsome.app.dto" />
+		
+	<bean id="StockDAO"
+		class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="StockSqlSession"
+		p:mapperInterface="com.thehandsome.app.dao.StockDAO" />
+	<!-- StockDAO end -->
+	
+	<!-- Import_And_ExportDAO start -->
+	<bean id="Import_And_ExportSqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="com.thehandsome.app.dto" />
+		
+	<bean id="Import_And_ExportDAO"
+		class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="Import_And_ExportSqlSession"
+		p:mapperInterface="com.thehandsome.app.dao.Import_And_ExportDAO" />
+	<!-- Import_And_ExportDAO end -->
+	
+	<!-- BrandDAO start -->
+	<bean id="BrandSqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="com.thehandsome.app.dto" />
+		
+	<bean id="BrandDAO"
+		class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="BrandSqlSession"
+		p:mapperInterface="com.thehandsome.app.dao.BrandDAO" />
+	<!-- BrandDAO end -->
+	
+	
 </beans>

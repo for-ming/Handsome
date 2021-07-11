@@ -9,7 +9,7 @@ public class MemberDTO {
 	private String id;
 	private String password;
 	private String name;
-	private String sex;
+	private String gender;
 	private String address;
 	private String phone;
 	private String birth;

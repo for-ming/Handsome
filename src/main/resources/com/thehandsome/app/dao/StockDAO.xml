@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thehandsome.app.dao.StockDAO">
+
+	<parameterMap type="java.util.HashMap" id="stockMap">
+		<parameter property="productId" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="departmentId" jdbcType="INTEGER"	mode="IN" />
+	</parameterMap>
+	<select id="getStock" parameterMap="stockMap"
+		resultType="StockDTO">
+		<![CDATA[
+		SELECT stock.id, stock.branchId, stock.productId, stock.sizelabel, stock.color, stock.quantity
+		FROM Stock, Product, Branch
+		WHERE product.Id like #{productId} AND product.brandId = branch.brand_Id AND branch.department_id = #{departmentId} AND Stock.branch_Id = branch.id
+		]]>
+	</select>
+</mapper>

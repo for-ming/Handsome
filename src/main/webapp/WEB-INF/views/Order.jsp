@@ -5,6 +5,7 @@
 <%
 String user = (String) session.getAttribute("id");
 %>
+<c:set var="order_date" value="${order_date}" />
 <!doctype html>
 <html>
 <head>
@@ -62,7 +63,7 @@ String user = (String) session.getAttribute("id");
             <div class="row justify-content-center">
                 <div class="d-sm-flex justify-content-center align-items-center padding-10px-bottom text-center">
                     <i class="far fa-calendar-alt text-dark-tussock margin-10px-right"></i>
-                    <span class="text-extra-dark-gray alt-font"> 주문일시 : &nbsp;</span><span class="alt-font">00-00-00</span>
+                    <span class="text-extra-dark-gray alt-font"> 주문일시 : &nbsp;</span><span class="alt-font">${order_date}</span>
                 </div>
             </div>
             <div class="d-sm-flex justify-content-center align-items-center text-center">

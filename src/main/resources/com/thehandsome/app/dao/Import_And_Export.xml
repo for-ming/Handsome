@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thehandsome.app.dao.Import_And_ExportDAO">
+
+	<insert id="insertImport_And_Export" parameterType="Import_And_ExportDTO">
+		INSERT INTO
+		Import_And_Export(buying_History_Id, departure, destination, state)
+		VALUES(#{buying_History_Id}, #{departure}, #{destination}, #{state})
+	</insert>
+</mapper>

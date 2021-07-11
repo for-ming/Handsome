@@ -83,97 +83,68 @@ function itemSum(itemForm)
 	</div>
 </section>
 <!-- end page title -->
-	<!-- start section -->
-	<section class="wow animate__fadeIn">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8 padding-70px-right lg-padding-30px-right md-padding-15px-right">
-					<div class="row align-items-center">
-						<div class="col-12" id="cart_table">
-							<table class="table cart-products margin-60px-bottom md-margin-40px-bottom sm-no-margin-bottom">
-								<form method="get" action="#">
-									<thead>
-										<tr>
-											<th scope="col" class="alt-font">주문일시</th>
-											<th scope="col" class="alt-font">상품정보</th>
-											<th scope="col" class="alt-font">수량</th>
-											<th scope="col" class="alt-font">판매가</th>
-											<th scope="col" class="alt-font">상태</th>
-											<th scope="col" class="alt-font">상세보기</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="cart" items="${cartDTO}" varStatus="status">
-											<tr>
-												<td>
-													<label><input type="checkbox" id="check_${cart.productId}" name="checkProduct" value="${cart.price}" value2 ="${cart.quantity}" onClick="itemSum(this.form);"></label>
-												</td>
-												<td class="product-thumbnail">
-													<a href="#"><img class="cart-product-image" src="${pageContext.request.contextPath}/resources/images/product/${cart.sex}/${cart.mainCategoryId}/${cart.subCategoryId}/${cart.imagePath}.jpg" alt=""></a>
-												</td>
-												<td class="product-name">
-													<a href="single-product.html">
-													<span class="variation">
-													<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">${cart.brandName}</label>
-													</span>
-													<span class="variation">
-													<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">${cart.title}</label>
-													</span>
-													</a> 
-													<span class="variation">
-														<div class="margin-4-rem-bottom">
-															<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">Size</label>
-															<ul class="text-extra-small shop-size">
-																<li><input class="d-none" type="radio" id="size-1" name="size"/>
-																<label for="size-1"	lass="width-80"><span>${cart.sizeLabel}</span></label>
-																</li>
-															</ul>
-														</div>
-													</span> 
-													<span class="variation">
-														<div class="margin-20px-bottom">
-															<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">color</label>
-															<ul class="alt-font shop-color">
-																<li><input class="d-none" type="radio" id="color-1" name="color"/> 
-																<label for="color-1"> <span style="background-color: #${cart.color} "></span></label>
-																</li>
-															</ul>
-														</div>
-													</span>
-													<button type="button" data-target="#update_option_${cart.productId}" class="btn btn-fancy btn-small mr-0 accordion-toggle" data-toggle="collapse" onclick="update('${cart.productId}');">옵션변경</button>
-												</td>
-												<td class="product-quantity" data-title="Quantity">
-													<div class="quantity">
-														<input type="button" value="-" class="qty-minus qty-btn" data-quantity="minus" data-field="quantity"> 
-														<input class="input-text qty-text" id="quantity${cart.productId}" type="number" name="quantity" value="${cart.quantity}"> 
-														<input type="button" value="+" class="qty-plus qty-btn" data-quantity="plus" data-field="quantity">
-														<button class="btn btn-fancy btn-small mr-0" type="button" id="update_q${cart.productId}" onclick="update_q('${cart.productId}');">변경</button>
-													</div>
-												</td>
-												<td class="product-price" data-title="price"><label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">￦${cart.price}</label></td>
-												<td class="product-name" data-title="point"><label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">5% (한섬마일리지) 0.1% (H.Point)</label></td>
-												<td><a href="#"	class="btn apply-coupon-btn text-uppercase btn-transparent-tussock">&hearts;</a></td>
-												<td><a href=""	class="btn apply-coupon-btn text-uppercase" onclick="delete_product('${cart.productId}');">&times;</a></td>
-												</tr>
-												<!-- start update option -->
-												<tr><td colspan="8" class="hiddenRow">
-												<div id ="update_option_${cart.productId}" class="collapse accordian-body">
-													<div id = "update_option_form_${cart.productId}"></div>
-							                    </div>
-							                	<!-- end update option -->
-							                	</td>
-							                	</tr>
-										</c:forEach>
-										<tr><td colspan="8" class="hiddenRow">
-										<div id ="cart_table_none"></div>
-					                	</td>
-					                	</tr>
-									</tbody>
-								</form>
-							</table>
-						</div>
-					</div>
-				</div>
+<section class="wow animate__fadeIn checkout">
+<div class="padding-50px-all">
+<div class="row align-items-center">
+<div class="col-12" id="order_table">
+	<table class="table cart-products margin-60px-bottom md-margin-40px-bottom sm-no-margin-bottom">
+		<form method="get" action="#">
+			<thead>
+				<tr>
+					<th scope="col" class="alt-font"></th>
+					<th scope="col" class="alt-font">상품</th>
+					<th scope="col" class="alt-font"></th>
+					<th scope="col" class="alt-font">수량</th>
+					<th scope="col" class="alt-font">금액</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="cart" items="${cartDTO}" varStatus="status">
+					<tr>
+						<td class="product-thumbnail">
+							<a href="#"><img class="cart-product-image" src="${pageContext.request.contextPath}/resources/images/product/${cart.sex}/${cart.mainCategoryId}/${cart.subCategoryId}/${cart.imagePath}.jpg" alt=""></a>
+						</td>
+						<td class="product-name">
+							<span class="variation">
+							<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-100px">${cart.brandName}</label>
+							</span>
+							<span class="variation">
+							<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase">${cart.title}</label>
+							</span>
+						</td>
+						<td class="product-name">
+							<span class="variation">
+								<div class="margin-4-rem-bottom">
+									<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">Size</label>
+									<ul class="text-extra-small shop-size">
+										<li><input class="d-none" type="radio" id="size-1" name="size"/>
+										<label for="size-1"	lass="width-80"><span>${cart.sizeLabel}</span></label>
+										</li>
+									</ul>
+									<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">color</label>
+									<ul class="alt-font shop-color">
+										<li><input class="d-none" type="radio" id="color-1" name="color"/> 
+										<label for="color-1"> <span style="background-color: #${cart.color} "></span></label>
+										</li>
+									</ul>
+								</div>
+							</span>
+						</td>
+						<td class="product-quantity" data-title="Quantity">
+							<div class="quantity">
+								<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-100px">${cart.quantity}</label>
+							</div>
+						</td>
+						<td class="product-price" data-title="price"><label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">￦${cart.price}</label></td>
+						</tr>
+				</c:forEach>
+			</tbody>
+		</form>
+	</table>
+</div>
+</div>
+</div>
+</section>
 
 	<!-- start footer -->
 	<!-- end footer -->
