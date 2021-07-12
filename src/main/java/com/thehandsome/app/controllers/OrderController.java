@@ -228,6 +228,7 @@ public class OrderController {
 					buying_HistoryDTO.setComplete(0);
 					
 					buying_HistoryService.insertBuying_History(buying_HistoryDTO);
+					cartService.deleteCart(cartDTO.get(i));
 					System.out.println("Insert 구매내역" + buying_HistoryDTO);
 					
 				}
