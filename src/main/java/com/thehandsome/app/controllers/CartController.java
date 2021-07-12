@@ -163,42 +163,27 @@ public class CartController {
 			return null;
 		}
 	}
-	/*
-	@PostMapping(value = "/classdetail/{no}/insert", produces = "application/json; charset=UTF-8")
-	public @ResponseBody String comment_insert(@PathVariable("no") long no, @RequestBody String strjson,
+	
+	@GetMapping(value = "/cart/insert/{pid}/{color}/{size}")
+	public @ResponseBody String cart_insert(@PathVariable("pid") String pid, @PathVariable("color") String color,  @PathVariable("size") String size,
 			HttpServletRequest request, HttpSession session) throws Exception {
 
-		JSONObject jObject = new JSONObject(strjson);
-		String content = jObject.getString("content_textVal");
-
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("ID", session.getAttribute("id"));
-		List<LectureDTO> data = memberService.checkMemberLecture(map);
-		if (data.size() == 0) {
-			return "False";
-		}
-		CommentDTO comments = new CommentDTO();
-		comments.setContent(content);
-		comments.setLecture_id(no);
-		comments.setMember_id((String) session.getAttribute("id"));
-		comments.setName((String) session.getAttribute("name"));
-		comments.setRegdate(DateFormatClass.strDateNow());
+		String userId = (String) session.getAttribute("id");
+		CartDTO cartDTO = new CartDTO();
+		cartDTO.setUserId(userId);
+		cartDTO.setProductId(pid);
+		cartDTO.setQuantity(1);
+		cartDTO.setColor(color);
+		cartDTO.setSizeLabel(size);
+		
 		try {
-			for (LectureDTO dto : data) {
-				long lecture_id = dto.getId();
-				if (lecture_id == no) { 
-					commentService.insertComment(comments);
-					return "Success";
-				}
-			}
-			return "False";
+			cartService.insertCart(cartDTO);
+			return "Success";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 
 	}
-*/
-
 	
 }

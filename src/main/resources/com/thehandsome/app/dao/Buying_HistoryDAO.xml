@@ -6,15 +6,15 @@
 	<select id="getBuying_HistoryList" parameterType="String"
 		resultType="Buying_HistoryDTO">
 		<![CDATA[
-		SELECT member_Id, product_Id, department_id, brand_id, purchase_date, quantity, sizeLabel, color, rec_method, stock, complete
+		SELECT Id, member_Id, product_Id, department_id, brand_id, purchase_date, quantity, sizelabel, color, rec_method, stock, complete
 		FROM Buying_History
 		WHERE member_id like #{userId}
 		]]>
 	</select>
 
 	<insert id="insertBuying_History" parameterType="Buying_HistoryDTO">
-		INSERT INTO Buying_History(member_Id, product_Id, department_id, brand_id, purchase_date, quantity, sizeLabel, color, rec_method, stock, complete)
-		VALUES(#{memberId}, #{productId}, #{departmentId}, #{brandId}, #{purchaseDate}, #{quantity}, #{sizeLabel}, #{color}, #{recMethod}, #{stock}, #{complete})
+		INSERT INTO Buying_History(member_Id, product_Id, department_id, brand_id, purchase_date, quantity, sizelabel, color, rec_method, stock, complete)
+		VALUES(#{member_Id}, #{product_Id}, #{department_Id}, #{brand_Id}, #{purchase_Date}, #{quantity}, #{sizelabel}, #{color}, #{rec_Method}, #{stock}, #{complete})
 	</insert>
 
 </mapper>

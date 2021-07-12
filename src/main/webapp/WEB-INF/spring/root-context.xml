@@ -110,5 +110,16 @@
 		p:mapperInterface="com.thehandsome.app.dao.BrandDAO" />
 	<!-- BrandDAO end -->
 	
+	<!-- BranchDAO start -->
+	<bean id="BranchSqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="com.thehandsome.app.dto" />
+		
+	<bean id="BranchDAO"
+		class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="BranchSqlSession"
+		p:mapperInterface="com.thehandsome.app.dao.BranchDAO" />
+	<!-- BranchDAO end -->
 	
 </beans>

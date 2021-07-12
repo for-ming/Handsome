@@ -15,7 +15,7 @@
 	<insert id="insertCart" parameterType="CartDTO">
 		INSERT INTO
 		Cart(userId, productId, quantity, color, sizeLabel)
-		VALUES(#{userId}, #{productId}, #{quantity}, #{color}, #{size})
+		VALUES(#{userId}, #{productId}, #{quantity}, #{color}, #{sizeLabel})
 	</insert>
 
 	<delete id="deleteCart" parameterType="CartDTO">

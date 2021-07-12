@@ -7,14 +7,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.thehandsome.app.dao.Import_And_ExportDAO;
+import com.thehandsome.app.dto.BranchDTO;
 import com.thehandsome.app.dto.BrandDTO;
 import com.thehandsome.app.dto.Buying_HistoryDTO;
 import com.thehandsome.app.dto.CartDTO;
@@ -30,6 +28,7 @@ import com.thehandsome.app.dto.DepartmentDTO;
 import com.thehandsome.app.dto.Import_And_ExportDTO;
 import com.thehandsome.app.dto.MemberDTO;
 import com.thehandsome.app.dto.StockDTO;
+import com.thehandsome.app.service.BranchService;
 import com.thehandsome.app.service.BrandService;
 import com.thehandsome.app.service.Buying_HistoryService;
 import com.thehandsome.app.service.CartService;
@@ -41,7 +40,6 @@ import com.thehandsome.app.service.StockService;
 import com.thehandsome.app.utils.DateFormatClass;
 
 import lombok.extern.slf4j.Slf4j;
-import oracle.net.aso.j;
 
 @Slf4j
 @RestController
@@ -64,6 +62,9 @@ public class OrderController {
 	
 	@Autowired
 	private BrandService brandService;
+	
+	@Autowired
+	private BranchService branchService;
 	
 	@Autowired
 	private Buying_HistoryService buying_HistoryService;
@@ -186,7 +187,6 @@ public class OrderController {
 		
 		String userId = (String) session.getAttribute("id");
 		String now = DateFormatClass.strDateNow();
-		List<CartDTO> orderlist = new LinkedList<CartDTO>();
 
 		JSONObject jObject = new JSONObject(strjson);
 		String str = jObject.get("product").toString();
@@ -196,9 +196,8 @@ public class OrderController {
 		System.out.println(jObject);
 		
 		try {
-			MemberDTO memberDTO = memberService.getMemberInfo(userId);
 			List<CartDTO> cartDTO = cartService.getCartList(userId);
-			
+			List<BrandDTO> brandDTO = brandService.getBrandList();
 			for(int i=0; i<cartDTO.size(); i++) {
 				if(str.contains(cartDTO.get(i).getProductId())) {
 					Buying_HistoryDTO buying_HistoryDTO = new Buying_HistoryDTO();
@@ -207,22 +206,20 @@ public class OrderController {
 					map.put("departmentId", department);
 					StockDTO stockDTO = stockService.getStock(map);
 					
-					List<BrandDTO> brandDTO = brandService.getBrandList();
-					
-					buying_HistoryDTO.setMemberId(userId);
-					buying_HistoryDTO.setProductId(cartDTO.get(i).getProductId());
-					buying_HistoryDTO.setDepartmentId(department);
+					buying_HistoryDTO.setMember_Id(userId);
+					buying_HistoryDTO.setProduct_Id(cartDTO.get(i).getProductId());
+					buying_HistoryDTO.setDepartment_Id(department);
 					for(int j=0; j<brandDTO.size(); j++) {
 						if(brandDTO.get(j).getName().equals(cartDTO.get(i).getBrandName())) {
-							buying_HistoryDTO.setBrandId(brandDTO.get(j).getId());
+							buying_HistoryDTO.setBrand_Id(brandDTO.get(j).getId());
 							break;
 						}
 					}
-					buying_HistoryDTO.setPurchaseDate(now);
+					buying_HistoryDTO.setPurchase_Date(now);
 					buying_HistoryDTO.setQuantity(cartDTO.get(i).getQuantity());
 					buying_HistoryDTO.setSizelabel(cartDTO.get(i).getSizeLabel());
 					buying_HistoryDTO.setColor(cartDTO.get(i).getColor());
-					buying_HistoryDTO.setRecMethod(rec_method);
+					buying_HistoryDTO.setRec_Method(rec_method);
 					if(stockDTO.getQuantity() >= cartDTO.get(i).getQuantity()) {
 						buying_HistoryDTO.setStock(1);
 					}
@@ -231,30 +228,30 @@ public class OrderController {
 					buying_HistoryDTO.setComplete(0);
 					
 					buying_HistoryService.insertBuying_History(buying_HistoryDTO);
+					System.out.println("Insert 구매내역" + buying_HistoryDTO);
 					
 				}
 				else cartDTO.remove(i);
 			}
 			
-			orderlist = cartDTO;
-			
-			
+			List<BranchDTO> branchDTO = branchService.getBranchList();
 			List<Buying_HistoryDTO> buyinglist = buying_HistoryService.getBuying_HistoryList(userId);
 			for(int i=0; i<buyinglist.size(); i++) {
-				if(buyinglist.get(i).getStock() == 0 && buyinglist.get(i).getPurchaseDate().equals(now)) {
+				for(int k=0; k<cartDTO.size(); k++) {
+				if(buyinglist.get(i).getStock() == 0 && buyinglist.get(i).getProduct_Id().equals(cartDTO.get(k).getProductId())) {
 					Import_And_ExportDTO import_And_ExportDTO = new Import_And_ExportDTO();
 					import_And_ExportDTO.setBuying_History_Id(buyinglist.get(i).getId());
-					//import_And_ExportDTO.setDeparture(department);
+					for(int j=0; j<branchDTO.size(); j++) {
+						if(branchDTO.get(j).getBrand_Id() == buyinglist.get(i).getBrand_Id() && branchDTO.get(j).getDepartment_Id() == department) {
+							import_And_ExportDTO.setDeparture(branchDTO.get(j).getId());
+						}
+					}
 					import_And_ExportDTO.setDestination(0);
 					import_And_ExportDTO.setState("발송 요청");
 					import_And_ExportService.insertImport_And_Export(import_And_ExportDTO);
 				}
+				}
 			}
-			
-			
-			
-			
-			
 			
 			return "Success";
 		} catch (Exception e) {
