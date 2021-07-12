@@ -18,8 +18,8 @@ public class CartServiceImpl implements CartService {
 	private CartDAO cartDAO;
 	
 	@Override
-	public List<CartDTO> getCartList(String userId) throws SQLException {
-		return cartDAO.getCartList(userId);
+	public List<CartDTO> getCartList(String user_id) throws SQLException {
+		return cartDAO.getCartList(user_id);
 	}
 
 	@Override

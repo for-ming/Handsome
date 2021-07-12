@@ -5,7 +5,7 @@
 
 	<select id="getMemberInfo" parameterType="String" resultType="MemberDTO">
 		<![CDATA[
-		SELECT id, name, gender, address, phone, birth, age, preferBrand_Id, preferdepartment_Id
+		SELECT id, name, gender, address, phone, birth, age, prefer_brand_id, prefer_department_id
 		FROM member
 		WHERE id like #{id}
 		]]>

@@ -14,24 +14,24 @@
 
 	<insert id="insertCart" parameterType="CartDTO">
 		INSERT INTO
-		Cart(userId, productId, quantity, color, sizeLabel)
-		VALUES(#{userId}, #{productId}, #{quantity}, #{color}, #{sizeLabel})
+		Cart(user_id, product_id, quantity, color, sizelabel)
+		VALUES(#{user_id}, #{product_id}, #{quantity}, #{color}, #{sizelabel})
 	</insert>
 
 	<delete id="deleteCart" parameterType="CartDTO">
 		DELETE FROM Cart
-		WHERE userId = #{userId} and productId = #{productId}
+		WHERE user_id = #{user_id} and product_id = #{product_id}
 	</delete>
 
 	<update id="updateCart" parameterType="CartDTO">
 		UPDATE Cart SET
-		color = #{color}, sizeLabel = #{sizeLabel}
-		where userId = #{userId} and productId = #{productId}
+		color = #{color}, sizelabel = #{sizelabel}
+		where user_id = #{user_id} and product_id = #{product_id}
 	</update>
 	
 	<update id="updateQuantity" parameterType="CartDTO">
 		UPDATE Cart SET
 		quantity = #{quantity}
-		where userId = #{userId} and productId = #{productId}
+		where user_id = #{user_id} and product_id = #{product_id}
 	</update>
 </mapper>

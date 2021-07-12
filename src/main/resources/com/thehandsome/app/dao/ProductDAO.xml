@@ -5,7 +5,7 @@
 
 	<select id="getProductInfo" parameterType="String" resultType="ProductDTO">
 		<![CDATA[
-		SELECT id, brandId, sex, title, price, maincategoryId, subcategoryId, shortDetail, longDetail
+		SELECT id, brandId, sex, title, price, maincategory_id, subcategory_id, shortdetail, longdetail
 		FROM product
 		WHERE id like #{id}
 		]]>
@@ -13,17 +13,17 @@
 
 	<select id="getColorList" parameterType="String" resultType="ProductcolorDTO">
 		<![CDATA[
-		SELECT productId, color, imagepath
+		SELECT product_id, color, imagepath
 		FROM ProductColor
-		WHERE ProductColor.productId like #{productId}
+		WHERE ProductColor.product_id like #{product_id}
 		]]>
 	</select>
 	
 	<select id="getSizeList" parameterType="String" resultType="ProductsizeDTO">
 		<![CDATA[
-		SELECT productId, sizelabel
+		SELECT product_id, sizelabel
 		FROM ProductSize
-		WHERE ProductSize.productId like #{productId}
+		WHERE ProductSize.product_id like #{product_id}
 		]]>
 	</select>
 </mapper>

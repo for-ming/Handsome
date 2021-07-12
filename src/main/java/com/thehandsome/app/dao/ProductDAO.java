@@ -8,6 +8,6 @@ import com.thehandsome.app.dto.ProductsizeDTO;
 
 public interface ProductDAO {
 	ProductDTO getProductInfo(String id);
-	List<ProductcolorDTO> getColorList(String productId);
-	List<ProductsizeDTO> getSizeList(String productId);
+	List<ProductcolorDTO> getColorList(String product_id);
+	List<ProductsizeDTO> getSizeList(String product_id);
 }

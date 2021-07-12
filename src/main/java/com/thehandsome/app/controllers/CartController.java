@@ -93,7 +93,6 @@ public class CartController {
 		Map<String, Object> result = new HashMap<>();
 		
 		JSONObject jObject = new JSONObject(strjson);
-		String user = jObject.getString("user");
 		String product_id = jObject.getString("product_id");
 		
 		List<ProductcolorDTO> colorDTO = productService.getColorList(product_id);
@@ -109,10 +108,10 @@ public class CartController {
 
 		String sizelabel = size;
 		
-		cartDTO.setUserId((String) session.getAttribute("id"));
-		cartDTO.setProductId(product_id);
+		cartDTO.setUser_id((String) session.getAttribute("id"));
+		cartDTO.setProduct_id(product_id);
 		cartDTO.setColor(color);
-		cartDTO.setSizeLabel(sizelabel);
+		cartDTO.setSizelabel(sizelabel);
 
 		try {
 			cartService.updateCart(cartDTO);
@@ -132,8 +131,8 @@ public class CartController {
 		String product_id = jObject.getString("product_id");
 		String quantity = jObject.getString("quantity");
 		
-		cartDTO.setUserId((String) session.getAttribute("id"));
-		cartDTO.setProductId(product_id);
+		cartDTO.setUser_id((String) session.getAttribute("id"));
+		cartDTO.setProduct_id(product_id);
 		cartDTO.setQuantity(Integer.parseInt(quantity));
 		
 		try {
@@ -152,8 +151,8 @@ public class CartController {
 		String user = jObject.getString("user");
 		String product_id = jObject.getString("product_id");
 
-		cartDTO.setUserId(user);
-		cartDTO.setProductId(product_id);
+		cartDTO.setUser_id(user);
+		cartDTO.setProduct_id(product_id);
 
 		try {
 			cartService.deleteCart(cartDTO);
@@ -170,11 +169,11 @@ public class CartController {
 
 		String userId = (String) session.getAttribute("id");
 		CartDTO cartDTO = new CartDTO();
-		cartDTO.setUserId(userId);
-		cartDTO.setProductId(pid);
+		cartDTO.setUser_id(userId);
+		cartDTO.setProduct_id(pid);
 		cartDTO.setQuantity(1);
 		cartDTO.setColor(color);
-		cartDTO.setSizeLabel(size);
+		cartDTO.setSizelabel(size);
 		
 		try {
 			cartService.insertCart(cartDTO);

@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class BranchDTO {
 	private int id;
-	private int department_Id;
-	private int brand_Id;
+	private int department_id;
+	private int brand_id;
 }
 

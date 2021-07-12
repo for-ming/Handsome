@@ -10,7 +10,7 @@ import lombok.Data;
 public class AdminDTO implements Serializable {
     private String id;
     private String password;
-    private String branchId;
+    private String branch_id;
     
     public void setPassword(String password) {
         this.password = DigestUtils.sha512Hex(password);

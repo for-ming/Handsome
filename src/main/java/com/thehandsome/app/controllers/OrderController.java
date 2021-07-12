@@ -55,9 +55,6 @@ public class OrderController {
 	private DepartmentService departmentService;
 	
 	@Autowired
-	private ProductService productService;
-	
-	@Autowired
 	private StockService stockService;
 	
 	@Autowired
@@ -206,20 +203,20 @@ public class OrderController {
 					map.put("departmentId", department);
 					StockDTO stockDTO = stockService.getStock(map);
 					
-					buying_HistoryDTO.setMember_Id(userId);
-					buying_HistoryDTO.setProduct_Id(cartDTO.get(i).getProductId());
-					buying_HistoryDTO.setDepartment_Id(department);
+					buying_HistoryDTO.setMember_id(userId);
+					buying_HistoryDTO.setProduct_id(cartDTO.get(i).getProductId());
+					buying_HistoryDTO.setDepartment_id(department);
 					for(int j=0; j<brandDTO.size(); j++) {
-						if(brandDTO.get(j).getName().equals(cartDTO.get(i).getBrandName())) {
-							buying_HistoryDTO.setBrand_Id(brandDTO.get(j).getId());
+						if(brandDTO.get(j).getName().equals(cartDTO.get(i).getBrand_name())) {
+							buying_HistoryDTO.setBrand_id(brandDTO.get(j).getId());
 							break;
 						}
 					}
-					buying_HistoryDTO.setPurchase_Date(now);
+					buying_HistoryDTO.setPurchase_date(now);
 					buying_HistoryDTO.setQuantity(cartDTO.get(i).getQuantity());
-					buying_HistoryDTO.setSizelabel(cartDTO.get(i).getSizeLabel());
+					buying_HistoryDTO.setSizelabel(cartDTO.get(i).getSizelabel());
 					buying_HistoryDTO.setColor(cartDTO.get(i).getColor());
-					buying_HistoryDTO.setRec_Method(rec_method);
+					buying_HistoryDTO.setRec_method(rec_method);
 					if(stockDTO.getQuantity() >= cartDTO.get(i).getQuantity()) {
 						buying_HistoryDTO.setStock(1);
 					}
@@ -239,11 +236,11 @@ public class OrderController {
 			List<Buying_HistoryDTO> buyinglist = buying_HistoryService.getBuying_HistoryList(userId);
 			for(int i=0; i<buyinglist.size(); i++) {
 				for(int k=0; k<cartDTO.size(); k++) {
-				if(buyinglist.get(i).getStock() == 0 && buyinglist.get(i).getProduct_Id().equals(cartDTO.get(k).getProductId())) {
+				if(buyinglist.get(i).getStock() == 0 && buyinglist.get(i).getProduct_id().equals(cartDTO.get(k).getProductId())) {
 					Import_And_ExportDTO import_And_ExportDTO = new Import_And_ExportDTO();
-					import_And_ExportDTO.setBuying_History_Id(buyinglist.get(i).getId());
+					import_And_ExportDTO.setBuying_history_id(buyinglist.get(i).getId());
 					for(int j=0; j<branchDTO.size(); j++) {
-						if(branchDTO.get(j).getBrand_Id() == buyinglist.get(i).getBrand_Id() && branchDTO.get(j).getDepartment_Id() == department) {
+						if(branchDTO.get(j).getBrand_id() == buyinglist.get(i).getBrand_id() && branchDTO.get(j).getDepartment_id() == department) {
 							import_And_ExportDTO.setDeparture(branchDTO.get(j).getId());
 						}
 					}

@@ -6,7 +6,7 @@ import java.util.List;
 import com.thehandsome.app.dto.CartDTO;
 
 public interface CartDAO {
-	List<CartDTO> getCartList(String userId) throws SQLException;
+	List<CartDTO> getCartList(String user_id) throws SQLException;
 	void insertCart(CartDTO cartDTO) throws SQLException;
 	void deleteCart(CartDTO cartDTO) throws SQLException;
 	void updateCart(CartDTO cartDTO) throws SQLException;

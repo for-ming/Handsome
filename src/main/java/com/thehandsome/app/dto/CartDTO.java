@@ -4,20 +4,20 @@ import lombok.Data;
 
 @Data
 public class CartDTO {
-	private String userId;
-	private String productId;
+	private String user_id;
+	private String product_id;
 	private int quantity;
-	private String sizeLabel;
+	private String sizelabel;
 	private String color;
 	private String imagePath;
-	private String brandName;
+	private String brand_name;
 	private String title;
 	private String price;
 	private String sex;
-	private int mainCategoryId;
-	private int subCategoryId;
+	private int mainCategory_id;
+	private int subCategory_id;
 	
 	public String getProductId() {
-		return productId;
+		return product_id;
 	}
 }

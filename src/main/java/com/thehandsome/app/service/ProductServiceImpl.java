@@ -24,12 +24,12 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public List<ProductcolorDTO> getColorList(String productId) {
-		return productDAO.getColorList(productId);
+	public List<ProductcolorDTO> getColorList(String product_id) {
+		return productDAO.getColorList(product_id);
 	}
 	
 	@Override
-	public List<ProductsizeDTO> getSizeList(String productId) {
-		return productDAO.getSizeList(productId);
+	public List<ProductsizeDTO> getSizeList(String product_id) {
+		return productDAO.getSizeList(product_id);
 	}
 }

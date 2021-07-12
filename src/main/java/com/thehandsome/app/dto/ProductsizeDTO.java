@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class ProductsizeDTO {
-	private String productId;
+	private String product_id;
 	private String sizelabel;
 }

@@ -18,8 +18,8 @@ public class Buying_HistoryServiceImpl implements Buying_HistoryService{
 	private Buying_HistoryDAO buying_HistoryDAO;
 	
 	@Override
-	public List<Buying_HistoryDTO> getBuying_HistoryList(String userId) throws SQLException {
-		return buying_HistoryDAO.getBuying_HistoryList(userId);
+	public List<Buying_HistoryDTO> getBuying_HistoryList(String user_id) throws SQLException {
+		return buying_HistoryDAO.getBuying_HistoryList(user_id);
 	}
 	
 	@Override

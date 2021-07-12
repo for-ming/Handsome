@@ -14,8 +14,8 @@ public class MemberDTO {
 	private String phone;
 	private String birth;
 	private int age;
-	private int preferBrand_Id;
-	private int preferdepartment_Id;
+	private int prefer_brand_id;
+	private int prefer_department_id;
 	
     public void setPassword(String password) {
         this.password = DigestUtils.sha512Hex(password);
