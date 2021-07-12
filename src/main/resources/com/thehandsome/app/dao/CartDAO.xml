@@ -6,9 +6,9 @@
 	<select id="getCartList" parameterType="String"
 		resultType="CartDTO">
 		<![CDATA[
-		SELECT Cart.userId, Cart.productId, Cart.quantity, Cart.sizelabel, Cart.color, ProductColor.imagepath, Brand.name as brandName, Product.title, Product.price, Product.sex, Product.mainCategoryid, Product.subCategoryid
+		SELECT Cart.user_id, Cart.product_id, Cart.quantity, Cart.sizelabel, Cart.color, ProductColor.imagepath, Brand.name as brand_name, Product.title, Product.price, Product.sex, Product.mainCategory_id, Product.subCategory_id
 		FROM Cart, ProductColor, Product, Brand
-		WHERE cart.userId = #{userId} and cart.productId like Product.id and product.brandId = brand.id and cart.productId like ProductColor.productId and cart.color=productColor.color
+		WHERE cart.user_id = #{user_id} and cart.product_id like Product.id and product.brand_id = brand.id and cart.product_id like ProductColor.product_id and cart.color=productColor.color
 		]]>
 	</select>
 

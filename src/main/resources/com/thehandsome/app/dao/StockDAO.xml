@@ -4,8 +4,8 @@
 <mapper namespace="com.thehandsome.app.dao.StockDAO">
 
 	<parameterMap type="java.util.HashMap" id="stockMap">
-		<parameter property="productId" jdbcType="VARCHAR" mode="IN" />
-		<parameter property="departmentId" jdbcType="INTEGER"	mode="IN" />
+		<parameter property="product_id" jdbcType="VARCHAR" mode="IN" />
+		<parameter property="department_id" jdbcType="INTEGER"	mode="IN" />
 	</parameterMap>
 	<select id="getStock" parameterMap="stockMap" resultType="StockDTO">
 		<![CDATA[

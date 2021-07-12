@@ -312,15 +312,15 @@ if(user != null){
 									<c:forEach var="cart" items="${cartDTO}" varStatus="status">
 										<tr>
 											<td>
-												<label><input type="checkbox" id="check_${cart.productId}" name="checkProduct" value="${cart.price}" value2 ="${cart.quantity}" value3="${cart.productId}" onClick="itemSum(this.form);"></label>
+												<label><input type="checkbox" id="check_${cart.product_id}" name="checkProduct" value="${cart.price}" value2 ="${cart.quantity}" value3="${cart.product_id}" onClick="itemSum(this.form);"></label>
 											</td>
 											<td class="product-thumbnail">
-												<a href="#"><img class="cart-product-image" src="${pageContext.request.contextPath}/resources/images/product/${cart.sex}/${cart.mainCategoryId}/${cart.subCategoryId}/${cart.imagePath}.jpg" alt=""></a>
+												<a href="#"><img class="cart-product-image" src="${pageContext.request.contextPath}/resources/images/product/${cart.sex}/${cart.mainCategory_id}/${cart.subCategory_id}/${cart.imagePath}.jpg" alt=""></a>
 											</td>
 											<td class="product-name">
 												<a href="single-product.html">
 												<span class="variation">
-												<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-100px">${cart.brandName}</label>
+												<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-100px">${cart.brand_name}</label>
 												</span>
 												<span class="variation">
 												<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase">${cart.title}</label>
@@ -331,7 +331,7 @@ if(user != null){
 														<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">Size</label>
 														<ul class="text-extra-small shop-size">
 															<li><input class="d-none" type="radio" id="size-1" name="size"/>
-															<label for="size-1"	lass="width-80"><span>${cart.sizeLabel}</span></label>
+															<label for="size-1"	lass="width-80"><span>${cart.sizelabel}</span></label>
 															</li>
 														</ul>
 													</div>
@@ -346,25 +346,25 @@ if(user != null){
 														</ul>
 													</div>
 												</span>
-												<button type="button" data-target="#update_option_${cart.productId}" class="btn btn-fancy btn-small mr-0 accordion-toggle" data-toggle="collapse" onclick="update('${cart.productId}');">옵션변경</button>
+												<button type="button" data-target="#update_option_${cart.product_id}" class="btn btn-fancy btn-small mr-0 accordion-toggle" data-toggle="collapse" onclick="update('${cart.product_id}');">옵션변경</button>
 											</td>
 											<td class="product-quantity" data-title="Quantity">
 												<div class="quantity">
 													<input type="button" value="-" class="qty-minus qty-btn" data-quantity="minus" data-field="quantity"> 
-													<input class="input-text qty-text" id="quantity${cart.productId}" type="number" name="quantity" value="${cart.quantity}"> 
+													<input class="input-text qty-text" id="quantity${cart.product_id}" type="number" name="quantity" value="${cart.quantity}"> 
 													<input type="button" value="+" class="qty-plus qty-btn" data-quantity="plus" data-field="quantity">
-													<button class="btn btn-fancy btn-small mr-0" type="button" id="update_q${cart.productId}" onclick="update_q('${cart.productId}');">변경</button>
+													<button class="btn btn-fancy btn-small mr-0" type="button" id="update_q${cart.product_id}" onclick="update_q('${cart.product_id}');">변경</button>
 												</div>
 											</td>
 											<td class="product-price" data-title="price"><label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">￦<fmt:formatNumber pattern="###,###,###" value="${cart.price}" /></label></td>
 											<td class="product-name" data-title="point"><label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">5% (한섬마일리지) 0.1% (H.Point)</label></td>
 											<td><a href="#"	class="btn apply-coupon-btn text-uppercase btn-transparent-tussock">&hearts;</a></td>
-											<td><a href=""	class="btn apply-coupon-btn text-uppercase" onclick="delete_product('${cart.productId}');">&times;</a></td>
+											<td><a href=""	class="btn apply-coupon-btn text-uppercase" onclick="delete_product('${cart.product_id}');">&times;</a></td>
 											</tr>
 											<!-- start update option -->
 											<tr><td colspan="8" class="hiddenRow">
-											<div id ="update_option_${cart.productId}" class="collapse accordian-body">
-												<div id = "update_option_form_${cart.productId}"></div>
+											<div id ="update_option_${cart.product_id}" class="collapse accordian-body">
+												<div id = "update_option_form_${cart.product_id}"></div>
 						                    </div>
 						                	<!-- end update option -->
 						                	</td>

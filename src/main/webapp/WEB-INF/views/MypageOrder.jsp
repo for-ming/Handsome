@@ -102,11 +102,11 @@ function itemSum(itemForm)
 				<c:forEach var="cart" items="${cartDTO}" varStatus="status">
 					<tr>
 						<td class="product-thumbnail">
-							<a href="#"><img class="cart-product-image" src="${pageContext.request.contextPath}/resources/images/product/${cart.sex}/${cart.mainCategoryId}/${cart.subCategoryId}/${cart.imagePath}.jpg" alt=""></a>
+							<a href="#"><img class="cart-product-image" src="${pageContext.request.contextPath}/resources/images/product/${cart.sex}/${cart.mainCategory_id}/${cart.subCategory_id}/${cart.imagePath}.jpg" alt=""></a>
 						</td>
 						<td class="product-name">
 							<span class="variation">
-							<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-100px">${cart.brandName}</label>
+							<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-100px">${cart.brand_name}</label>
 							</span>
 							<span class="variation">
 							<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase">${cart.title}</label>
@@ -118,7 +118,7 @@ function itemSum(itemForm)
 									<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">Size</label>
 									<ul class="text-extra-small shop-size">
 										<li><input class="d-none" type="radio" id="size-1" name="size"/>
-										<label for="size-1"	lass="width-80"><span>${cart.sizeLabel}</span></label>
+										<label for="size-1"	lass="width-80"><span>${cart.sizelabel}</span></label>
 										</li>
 									</ul>
 									<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">color</label>

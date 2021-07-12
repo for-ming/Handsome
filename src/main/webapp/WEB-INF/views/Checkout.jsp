@@ -119,12 +119,12 @@ function order(){
 				<c:forEach var="cart" items="${cartDTO}" varStatus="status">
 					<tr>
 						<td class="product-thumbnail">
-							<img class="cart-product-image" src="${pageContext.request.contextPath}/resources/images/product/${cart.sex}/${cart.mainCategoryId}/${cart.subCategoryId}/${cart.imagePath}.jpg" alt="">
+							<img class="cart-product-image" src="${pageContext.request.contextPath}/resources/images/product/${cart.sex}/${cart.mainCategory_id}/${cart.subCategory_id}/${cart.imagePath}.jpg" alt="">
 						</td>
 						<td class="product-name">
-							<input type="hidden" id="${cart.title}" name="pid" value="${cart.productId}"/>
+							<input type="hidden" id="${cart.title}" name="pid" value="${cart.product_id}"/>
 							<span class="variation">
-							<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-100px">${cart.brandName}</label>
+							<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-100px">${cart.brand_name}</label>
 							</span>
 							<span class="variation">
 							<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase">${cart.title}</label>
@@ -136,7 +136,7 @@ function order(){
 									<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">Size</label>
 									<ul class="text-extra-small shop-size">
 										<li><input class="d-none" type="radio" id="size-1" name="size"/>
-										<label for="size-1"	class="width-80"><span>${cart.sizeLabel}</span></label>
+										<label for="size-1"	class="width-80"><span>${cart.sizelabel}</span></label>
 										</li>
 									</ul>
 									<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">color</label>
@@ -270,7 +270,7 @@ function order(){
                             <c:set var="sum" value="0" />
                             <c:forEach var="cart" items="${cartDTO}" varStatus="status">
                                 <tr class="text-dark-gray">
-                                    <td>${cart.title} × ${cart.quantity}<span class="d-block w-100">Size: ${cart.sizeLabel}</span></td>
+                                    <td>${cart.title} × ${cart.quantity}<span class="d-block w-100">Size: ${cart.sizelabel}</span></td>
                                     <td>￦ <fmt:formatNumber pattern="###,###,###" value="${cart.price}" /></td>
                                 </tr>
                              <c:set var="sum" value="${sum + (cart.price * cart.quantity)}" />
