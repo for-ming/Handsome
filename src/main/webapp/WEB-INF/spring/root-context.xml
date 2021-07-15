@@ -14,6 +14,40 @@
 		p:username="${username}" p:password="${password}" p:jdbcUrl="${url}"
 		p:driverClassName="${driver}" p:maximumPoolSize="20" />
 
+
+	<!-- memberDAO start -->
+	<bean id="memberSqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="com.thehandsome.app.dto" />
+	<bean id="memberDAO"
+		class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="memberSqlSession"
+		p:mapperInterface="com.thehandsome.app.dao.MemberDAO" />
+	<!-- memberDAO end -->
+
+	<!-- adminDAO start -->
+	<bean id="adminSqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="com.thehandsome.app.dto" />
+	<bean id="adminDAO"
+		class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="adminSqlSession"
+		p:mapperInterface="com.thehandsome.app.dao.AdminDAO" />
+	<!-- adminDAO end -->
+
+	<!-- brandDAO start -->
+	<bean id="brandSqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="com.thehandsome.app.dto" />
+	<bean id="brandDAO"
+		class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="brandSqlSession"
+		p:mapperInterface="com.thehandsome.app.dao.BrandDAO" />
+	<!-- brandDAO end -->
+
 	<!-- cartDAO start -->
 	<bean id="CartSqlSession"
 		class="org.mybatis.spring.SqlSessionFactoryBean"
@@ -25,101 +59,114 @@
 		p:sqlSessionFactory-ref="CartSqlSession"
 		p:mapperInterface="com.thehandsome.app.dao.CartDAO" />
 	<!-- cartDAO end -->
-
-	<!-- DepartmentDAO start -->
-	<bean id="DepartmentSqlSession"
-		class="org.mybatis.spring.SqlSessionFactoryBean"
-		p:dataSource-ref="dataSource"
-		p:typeAliasesPackage="com.thehandsome.app.dto" />
-		
-	<bean id="DepartmentDAO"
-		class="org.mybatis.spring.mapper.MapperFactoryBean"
-		p:sqlSessionFactory-ref="DepartmentSqlSession"
-		p:mapperInterface="com.thehandsome.app.dao.DepartmentDAO" />
-	<!-- DepartmentDAO end -->
 	
-	<!-- ProductDAO start -->
-	<bean id="ProductSqlSession"
+	<!-- productDAO start -->
+	<bean id="productSqlSession"
 		class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="dataSource"
 		p:typeAliasesPackage="com.thehandsome.app.dto" />
-		
-	<bean id="ProductDAO"
+	<bean id="productDAO"
 		class="org.mybatis.spring.mapper.MapperFactoryBean"
-		p:sqlSessionFactory-ref="ProductSqlSession"
+		p:sqlSessionFactory-ref="productSqlSession"
 		p:mapperInterface="com.thehandsome.app.dao.ProductDAO" />
-	<!-- ProductDAO end -->
-	
-	<!-- MemberDAO start -->
-	<bean id="MemberSqlSession"
+	<!-- productDAO end -->
+
+	<!-- departmentDAO start -->
+	<bean id="departmentSqlSession"
 		class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="dataSource"
 		p:typeAliasesPackage="com.thehandsome.app.dto" />
-		
-	<bean id="MemberDAO"
+	<bean id="departmentDAO"
 		class="org.mybatis.spring.mapper.MapperFactoryBean"
-		p:sqlSessionFactory-ref="MemberSqlSession"
-		p:mapperInterface="com.thehandsome.app.dao.MemberDAO" />
-	<!-- MemberDAO end -->
+		p:sqlSessionFactory-ref="departmentSqlSession"
+		p:mapperInterface="com.thehandsome.app.dao.DepartmentDAO" />
+	<!-- departmentDAO end -->
 
-	<!-- Buying_HistoryDAO start -->
+	<!-- recommendDAO start -->
+	<bean id="recommendSqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="com.thehandsome.app.dto" />
+	<bean id="recommendDAO"
+		class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="departmentSqlSession"
+		p:mapperInterface="com.thehandsome.app.dao.RecommendDAO" />
+	<!-- recommendDAO end -->
+	
+	<!-- buying_historyDAO start -->
 	<bean id="Buying_HistorySqlSession"
 		class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="dataSource"
 		p:typeAliasesPackage="com.thehandsome.app.dto" />
-		
+
 	<bean id="Buying_HistoryDAO"
 		class="org.mybatis.spring.mapper.MapperFactoryBean"
 		p:sqlSessionFactory-ref="Buying_HistorySqlSession"
 		p:mapperInterface="com.thehandsome.app.dao.Buying_HistoryDAO" />
-	<!-- Buying_HistoryDAO end -->
+	<!-- buying_historyDAO end -->
 	
-	<!-- StockDAO start -->
-	<bean id="StockSqlSession"
+	<!-- productColorDAO start -->
+	<bean id="ProductColorSqlSession"
 		class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="dataSource"
 		p:typeAliasesPackage="com.thehandsome.app.dto" />
-		
-	<bean id="StockDAO"
+
+	<bean id="ProductColorDAO"
 		class="org.mybatis.spring.mapper.MapperFactoryBean"
-		p:sqlSessionFactory-ref="StockSqlSession"
-		p:mapperInterface="com.thehandsome.app.dao.StockDAO" />
-	<!-- StockDAO end -->
+		p:sqlSessionFactory-ref="ProductColorSqlSession"
+		p:mapperInterface="com.thehandsome.app.dao.ProductColorDAO" />
+	<!-- productColorDAO end -->
 	
 	<!-- Import_And_ExportDAO start -->
 	<bean id="Import_And_ExportSqlSession"
 		class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="dataSource"
 		p:typeAliasesPackage="com.thehandsome.app.dto" />
-		
+
 	<bean id="Import_And_ExportDAO"
 		class="org.mybatis.spring.mapper.MapperFactoryBean"
 		p:sqlSessionFactory-ref="Import_And_ExportSqlSession"
 		p:mapperInterface="com.thehandsome.app.dao.Import_And_ExportDAO" />
 	<!-- Import_And_ExportDAO end -->
 	
-	<!-- BrandDAO start -->
-	<bean id="BrandSqlSession"
-		class="org.mybatis.spring.SqlSessionFactoryBean"
-		p:dataSource-ref="dataSource"
-		p:typeAliasesPackage="com.thehandsome.app.dto" />
-		
-	<bean id="BrandDAO"
-		class="org.mybatis.spring.mapper.MapperFactoryBean"
-		p:sqlSessionFactory-ref="BrandSqlSession"
-		p:mapperInterface="com.thehandsome.app.dao.BrandDAO" />
-	<!-- BrandDAO end -->
-	
-	<!-- BranchDAO start -->
+		<!-- BranchDAO start -->
 	<bean id="BranchSqlSession"
 		class="org.mybatis.spring.SqlSessionFactoryBean"
 		p:dataSource-ref="dataSource"
 		p:typeAliasesPackage="com.thehandsome.app.dto" />
-		
+
 	<bean id="BranchDAO"
 		class="org.mybatis.spring.mapper.MapperFactoryBean"
 		p:sqlSessionFactory-ref="BranchSqlSession"
 		p:mapperInterface="com.thehandsome.app.dao.BranchDAO" />
 	<!-- BranchDAO end -->
 	
+	<!-- StockDAO start -->
+	<bean id="StockSqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean"
+		p:dataSource-ref="dataSource"
+		p:typeAliasesPackage="com.thehandsome.app.dto" />
+
+	<bean id="StockDAO"
+		class="org.mybatis.spring.mapper.MapperFactoryBean"
+		p:sqlSessionFactory-ref="StockSqlSession"
+		p:mapperInterface="com.thehandsome.app.dao.StockDAO" />
+	<!-- StockDAO end -->
+	
+	<!-- google email -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="smtp.gmail.com" />
+    <property name="port" value="587" />
+    <property name="username" value="메일 주소" />
+    <property name="password" value="비밀 번호" />
+    <property name="javaMailProperties">
+        <props>
+            <prop key="mail.transport.protocol">smtp</prop>
+            <prop key="mail.smtp.auth">true</prop>
+            <prop key="mail.smtp.starttls.enable">true</prop>
+            <prop key="mail.debug">true</prop>
+        </props>
+    </property>
+	</bean>
+
 </beans>

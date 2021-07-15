@@ -6,8 +6,10 @@ import lombok.Data;
 
 @Data
 public class ProductDTO implements Serializable {
+
 	private String id;
 	private int brand_id;
+	private String brandname;
 	private String sex;
 	private String title;
 	private int price;
@@ -17,4 +19,5 @@ public class ProductDTO implements Serializable {
 	private String shortdetail;
 	private String longdetail;
 	private int selected;
+	private int searched;
 }

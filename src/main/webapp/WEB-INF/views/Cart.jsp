@@ -22,10 +22,10 @@ if(user != null){
 <meta name="description" content="더한섬닷컴 | THE HANDSOME.COM">
 
 <!-- favicon icon -->
-<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png">
-<link rel="apple-touch-icon" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="72x72" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="114x114" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-114x114.png">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/icon/favicon.png">
+<link rel="apple-touch-icon" href="${pageContext.request.contextPath}/resources/icon/favicon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="${pageContext.request.contextPath}/resources/icon/favicon.png">
+<link rel="apple-touch-icon" sizes="114x114" href="${pageContext.request.contextPath}/resources/icon/favicon.png">
 
 <!-- style sheets and font icons  -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/font-icons.min.css">
@@ -226,6 +226,7 @@ if(user != null){
 			dataType: "text",
 			contentType: "application/json",
 			success : function (result) { 
+				window.location.href = "${pageContext.request.contextPath}/cart";
 					  }
 		});
 	}
@@ -258,7 +259,7 @@ if(user != null){
 				dataType: "text",
 				contentType: "application/json",
 				success : function (result) { 
-								window.location.href = "/app/checkout/order";
+								window.location.href = "${pageContext.request.contextPath}/checkout/order";
 						  }
 			});
 		}
@@ -290,7 +291,7 @@ if(user != null){
 		<div class="row">
 			<div class="col-lg-8 padding-50px-right lg-padding-20px-right md-padding-15px-right">
 				<div class="row align-items-center">
-					<div class="col-12" id="cart_table">
+					<div class="col-18" id="cart_table">
 						<table class="table cart-products margin-60px-bottom md-margin-40px-bottom sm-no-margin-bottom">
 							<form method="get" action="${pageContext.request.contextPath}/checkout">
 								<thead>
@@ -315,20 +316,20 @@ if(user != null){
 												<label><input type="checkbox" id="check_${cart.product_id}" name="checkProduct" value="${cart.price}" value2 ="${cart.quantity}" value3="${cart.product_id}" onClick="itemSum(this.form);"></label>
 											</td>
 											<td class="product-thumbnail">
-												<a href="#"><img class="cart-product-image" src="${pageContext.request.contextPath}/resources/images/product/${cart.sex}/${cart.mainCategory_id}/${cart.subCategory_id}/${cart.imagePath}.jpg" alt=""></a>
+												<a href="${pageContext.request.contextPath}/productdetail/${cart.product_id}"><img class="cart-product-image" src="${pageContext.request.contextPath}/resources/images/product/${cart.sex}/${cart.mainCategory_id}/${cart.subCategory_id}/${cart.imagePath}.jpg" alt=""></a>
 											</td>
 											<td class="product-name">
-												<a href="single-product.html">
+												<a href="${pageContext.request.contextPath}/productdetail/${cart.product_id}">
 												<span class="variation">
-												<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-100px">${cart.brand_name}</label>
+												<label class="text-extra-dark-gray text-small font-weight-500 alt-font text-uppercase">${cart.brand_name}</label>
 												</span>
 												<span class="variation">
-												<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase">${cart.title}</label>
+												<label class="text-extra-dark-gray text-medium font-weight-500 alt-font text-uppercase"><b>${cart.title}</b></label>
 												</span>
 												</a> 
 												<span class="variation">
-													<div class="margin-4-rem-bottom">
-														<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">Size</label>
+													<div class="margin-10px-bottom">
+														<label class="text-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">Size</label>
 														<ul class="text-extra-small shop-size">
 															<li><input class="d-none" type="radio" id="size-1" name="size"/>
 															<label for="size-1"	lass="width-80"><span>${cart.sizelabel}</span></label>
@@ -338,7 +339,7 @@ if(user != null){
 												</span> 
 												<span class="variation">
 													<div class="margin-20px-bottom">
-														<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">color</label>
+														<label class="text-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">color</label>
 														<ul class="alt-font shop-color">
 															<li><input class="d-none" type="radio" id="color-1" name="color"/> 
 															<label for="color-1"> <span style="background-color: #${cart.color} "></span></label>
@@ -357,7 +358,7 @@ if(user != null){
 												</div>
 											</td>
 											<td class="product-price" data-title="price"><label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">￦<fmt:formatNumber pattern="###,###,###" value="${cart.price}" /></label></td>
-											<td class="product-name" data-title="point"><label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-60px">5% (한섬마일리지) 0.1% (H.Point)</label></td>
+											<td class="product-name" data-title="point"><label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-80px">5%<br>한섬마일리지<br>0.1% (H.Point)</label></td>
 											<td><a href="#"	class="btn apply-coupon-btn text-uppercase btn-transparent-tussock">&hearts;</a></td>
 											<td><a href=""	class="btn apply-coupon-btn text-uppercase" onclick="delete_product('${cart.product_id}');">&times;</a></td>
 											</tr>
@@ -371,7 +372,7 @@ if(user != null){
 						                	</tr>
 									</c:forEach>
 									<tr><td colspan="8" class="hiddenRow">
-									<div id ="cart_table_none"></div>
+									<div class="text-center margin-10px-all" id ="cart_table_none"></div>
 				                	</td>
 				                	</tr>
 								</tbody>
@@ -431,42 +432,44 @@ if(user != null){
 <!-- end section -->
 
 <hr>
-<div class="middle">
+<div class="row">
+	<div class="padding-50px-all ">
 	<table>
-		<b class="text-extra-dark-gray no-margin-bottom text-center text-lg-left">PROMOTION 혜택</b>
-		<th><strong>혜택 1 / 300,000원 이상 구매하신 고객님께 사은품을 드립니다. </strong></th>
-		<th><strong>혜택 2 / 100,000원 이상 구매하신 고객님께 사은품을 드립니다. </strong></th>
+		<b class="text-extra-dark-gray margin-10px-bottom text-center text-lg-left">PROMOTION 혜택</b>
+		<th class="padding-20px-all" ><strong>혜택 1 / 300,000원 이상 구매하신 고객님께 사은품을 드립니다. </strong></th>
+		<th class="padding-20px-all" ><strong>혜택 2 / 100,000원 이상 구매하신 고객님께 사은품을 드립니다. </strong></th>
 		<tr>
-			<td>
+			<td class="padding-20px-all" >
 				<ul>
 					<img src="${pageContext.request.contextPath}/resources/icon/sample1.png">
 					<li>사은품 : SYSTEM 블랙 스트링 브레이스릿</li>
-					<li>SYSTEM 온라인 익스클루시브 주얼리 포함 시스템 (정상) 실결제 30만원 이상 구매하신 고객님께
-						"SYSTEM 블랙 스트링 브레이스릿"을 드립니다. <br>기간 : 07월 01일 ~ 07월 18일<br>*아울렛
-						제외, 실결제 30만원 이상(※1인 1개 제한)<br>사은품은 이벤트 종료 후, 취소 및 반품을 고려하여
-						8월 2일 이후 일괄 발송 예정입니다. (1~3일 지연 가능)
+					<li>SYSTEM 온라인 익스클루시브 주얼리 포함 시스템 (정상) 실결제<br> 30만원 이상 구매하신 고객님께
+						"SYSTEM 블랙 스트링 브레이스릿"을 드립니다. <br>
+						기간 : 07월 01일 ~ 07월 18일<br>
+						*아울렛 제외, 실결제 30만원 이상(※1인 1개 제한)<br>
+						사은품은 이벤트 종료 후, 취소 및 반품을 고려하여 8월 2일 이후 일괄 발송 예정입니다.<br> (1~3일 지연 가능)
 					</li>
 				</ul>
 			</td>
-			<td>
+			<td class="padding-20px-all" >
 				<ul>
 					<img src="${pageContext.request.contextPath}/resources/icon/sample2.png">
 					<li>사은품 : BEIGIC 5/10만원 구매 시 머그/머그+로션</li>
-					<li>더캐시미어띵즈 내 BEIGIC 상품을 5/10만원 이상 구매하신 고객님께 "머그/머그+로션 30ml"를
+					<li>더캐시미어띵즈 내 BEIGIC 상품을 5/10만원 이상 구매하신 고객님께<br> "머그/머그+로션 30ml"를
 						드립니다.<br>기간 : 06월 23일~소진 시 까지<br>*5만원 이상~10만원 미만 구매
-						고객에게는 머그, 10만원 이상 고객에게는 머그+로션 30ml SET를 드립니다.<br>사은품은 취소 및
+						고객에게는 머그, <br>10만원 이상 고객에게는 머그+로션 30ml SET를 드립니다.<br>사은품은 취소 및
 						반품을 고려하여 준비 수량 소진 이후 추후 발송 예정입니다.
 					</li>
 				</ul>
 			</td>
 		</tr>
-		<th><strong>혜택 3 / 구매하신 고객님께 사은품을 드립니다. </strong></th>
+		<th class="padding-20px-all" ><strong>혜택 3 / 구매하신 고객님께 사은품을 드립니다. </strong></th>
 		<tr>
-			<td>
+			<td class="padding-20px-all" >
 				<ul>
 					<img src="${pageContext.request.contextPath}/resources/icon/sample3.png">
 					<li>사은품 : BEIGIC 바디로션 2매</li>
-					<li>더캐시미어띵즈 내 BEIGIC 상품을 구매하신 고객님께 "바디로션 7ml 2매"를 드립니다.<br>기간
+					<li>더캐시미어띵즈 내 BEIGIC 상품을 구매하신 고객님께 <br> "바디로션 7ml 2매"를 드립니다.<br>기간
 						: 06월 23일~소진 시 까지<br>*BEIGIC 상품 필수 구매<br>사은품은 주문하신 상품과
 						함께 동봉하여 발송될 예정입니다.
 					</li>
@@ -476,8 +479,7 @@ if(user != null){
 	</table>
 	<hr>
 	<table>
-		<th class="text-extra-dark-gray no-margin-bottom text-center text-lg-left">쇼핑백
-			이용안내</th>
+		<th class="text-extra-dark-gray padding-20px-all ">쇼핑백 이용안내</th>
 		<th></th>
 		<tr>
 			<td></td>
@@ -502,6 +504,7 @@ if(user != null){
 			<td>
 		</tr>
 	</table>
+</div>
 </div>
 <!-- start footer -->
 <!-- end footer -->

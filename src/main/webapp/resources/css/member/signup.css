@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+
+
+
+#pwdChk{
+	margin-bottom:0;
+}
+.form-control{
+	width:70%;
+}
+
+.form-control{
+	margin-right:20px;
+}
+
+#registerButton{
+	margin-top:20px;
+}
+
+.invalid-feedback{
+	height:20px;
+}
+.flexdisplay{
+	display:flex;
+	height:50px;
+	align-content: center;
+}
+
+.radio{
+	margin-right:20px;
+}
+
+body > section:nth-child(18) > div > div > div > form > div:nth-child(5) > div > label
+{
+	margin-bottom:0;
+}
+
+input[type=radio]:checked{
+            background-color: #232323;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            border: none;
+            width: 13px;
+            height: 13px;
+            margin-bottom:0;
+            border-radius: 100%;
+        }
+
+select{
+	padding:0;
+	border:0;
+	appearance: auto;
+
+}
+
+.preferbrandcontainer{
+	border:1px solid #ced4da;
+}

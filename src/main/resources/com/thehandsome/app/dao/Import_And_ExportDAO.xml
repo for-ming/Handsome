@@ -2,8 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thehandsome.app.dao.Import_And_ExportDAO">
-	<insert id="insertImport_And_Export" parameterType="Import_And_ExportDTO">
-		INSERT INTO	Import_And_Export(buying_history_Id, departure, destination, state)
-		VALUES(#{buying_history_Id}, #{departure}, #{destination}, #{state})
+	<select id="getState" resultType="Import_And_ExportDTO">
+		<![CDATA[
+			SELECT	*
+			FROM	IMPORT_AND_EXPORT
+			WHERE 	buying_history_id = #{id}
+		]]>
+	</select>
+
+	<select id="getStateList" resultType="Import_And_ExportDTO">
+		<![CDATA[
+			SELECT	*
+			FROM	IMPORT_AND_EXPORT
+			WHERE 	(departure = #{id} AND (state = '발송요청' OR state = '입고요청' OR state = '입고완료')) 
+					OR
+					(destination = #{id} AND (state = '입고요청' OR state = '입고완료'))
+			ORDER BY BUYING_HISTORY_ID ASC
+		]]>
+	</select>
+	<select id="getStateWithOrder" resultType="Import_And_ExportDTO">
+		<![CDATA[
+			SELECT	*
+			FROM	IMPORT_AND_EXPORT
+			WHERE 	(departure = #{id} OR destination = #{id}) AND state = #{order}
+			ORDER BY BUYING_HISTORY_ID ASC
+		]]>
+	</select>
+	<update id="updateDest">
+		<![CDATA[
+			UPDATE	IMPORT_AND_EXPORT
+			SET		destination = #{destination}
+			WHERE	buying_history_id = #{id}
+		]]>
+	</update>
+		<update id="updateStockState">
+		<![CDATA[
+			UPDATE	IMPORT_AND_EXPORT
+			SET		state = #{order}
+			WHERE	buying_history_id = #{id}
+		]]>
+	</update>
+	<select id="getInfo" resultType="Import_And_ExportDTO">
+		<![CDATA[
+			SELECT	*
+			FROM	IMPORT_AND_EXPORT
+			WHERE 	buying_history_id = #{id}
+		]]>
+	</select>
+		<insert id="insertImport_And_Export" parameterType="Import_And_ExportDTO">
+		INSERT INTO	Import_And_Export(buying_history_id, departure, destination, state)
+		VALUES(#{buying_history_id}, #{departure}, #{destination}, #{state})
 	</insert>
 </mapper>

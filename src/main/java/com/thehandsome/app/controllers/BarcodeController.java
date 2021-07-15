@@ -1,7 +1,5 @@
 package com.thehandsome.app.controllers;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -32,10 +30,7 @@ public class BarcodeController {
 		ModelAndView mav = new ModelAndView("ScanBarcode");
 
 		try {
-			//임의 session id 
-			session.setAttribute("id", "ming");
-			
-			mav.addObject("url", "/app/barcode");
+			mav.addObject("url", "/handsome_main/barcode");
 			mav.setViewName("ScanBarcode");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -51,10 +46,7 @@ public class BarcodeController {
 		ModelAndView mav = new ModelAndView("CreateBarcode");
 
 		try {
-			//임의 session id 
-			session.setAttribute("id", "ming");
-			
-			mav.addObject("url", "/app/barcode/create");
+			mav.addObject("url", "/handsome_main/barcode/create");
 			mav.setViewName("CreateBarcode");
 		} catch (Exception e) {
 			e.printStackTrace();

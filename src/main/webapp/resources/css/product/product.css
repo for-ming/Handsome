@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+.star-rating {
+	display: flex;
+	flex-direction: row-reverse;
+	font-size: 2.25rem;
+	line-height: 2.5rem;
+	justify-content: space-around;
+	padding: 0 0.2em;
+	text-align: center;
+	width: 5em;
+	padding-right: 15px
+}
+
+.star-rating input {
+	display: none;
+}
+
+.star-rating label {
+	-webkit-text-fill-color: transparent;
+	/* Will override color (regardless of order) */
+	-webkit-text-stroke-width: 1.2px;
+	-webkit-text-stroke-color: #2b2a29;
+	cursor: pointer;
+}
+
+.star-rating :checked ~ label {
+	-webkit-text-fill-color: gold;
+}
+
+.star-rating label:hover, .star-rating label:hover ~ label {
+	-webkit-text-fill-color: #fff58c;
+}
+.shopping-content{
+	display:flex;
+}
+.imagecontainer{
+	width:50%;
+}
+
+.products-image{
+	position:relative;
+	height:906px;
+}
+
+.product_image{
+	position:absolute;
+	display:none;
+}
+.product_image_show{
+	display:block;
+}
+
+.product-summary{
+	width:50%;
+}
+.item_name{
+	margin:0;
+}
+
+.brand_name{
+	font-size:16px;
+}
+.number_code{
+	margin-bottom:20px;
+}
+
+.product_title{
+	font-size:28px;
+}
+
+.longdetail{
+	    background-color: #f5f5f5;
+	    border-radius: 20px;
+	    padding: 22px 38px;
+	
+}
+
+p:before{
+	top:0px;
+	left:-20px;
+	background-image: url("/resources/icon/comma_start.png");
+    content: "";
+    position: absolute;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    width: 10px;
+    height: 10px;
+}
+p:after{
+	bottom:8px;
+	right:-20px;
+	background-image: url("/resources/icon/comma_end.png");
+    content: "";
+    position: absolute;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    width: 10px;
+    height: 10px;
+}
+
+.reviewtitle{
+	margin-top:100px;
+}

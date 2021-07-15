@@ -3,12 +3,38 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thehandsome.app.dao.DepartmentDAO">
 
-	<select id="getDepartmentList" resultType="DepartmentDTO">
+	<select id="selectAllDepartment" resultType="DepartmentDTO">
+	
+		select *
+		from department
+     
+	</select>
+	
+		<select id="getDepartmentInfo" resultType="DepartmentDTO">
 		<![CDATA[
-		SELECT id, name, address, latitude, longitude
-		FROM Department
+			SELECT	*
+			FROM	department
+			WHERE	id = (	SELECT	department_id
+							FROM	branch
+							WHERE	id = (	SELECT 	branch_id
+											FROM	admin
+											WHERE	id = #{id} AND password = #{password}))
 		]]>
 	</select>
-
+	
+	<select id="getDepartmentName" resultType="DepartmentDTO">
+		<![CDATA[
+			SELECT	*
+			FROM	department
+			WHERE	id = #{id}
+		]]>
+	</select>
+	
+	<select id="getDepartmentList" resultType="DepartmentDTO">
+		<![CDATA[
+			SELECT	id, name, address, latitude, longitude
+			FROM	department
+		]]>
+	</select>
 	
 </mapper>

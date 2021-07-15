@@ -787,7 +787,7 @@ input.btn:focus { border-width: 2px; }
 .btn.btn-olivine-green:hover, .btn.btn-olivine-green:focus { background: transparent; color: #8bb867; }
 .btn.btn-sky-blue { background: #2e94eb; border-color: #2e94eb; color: #ffffff; }
 .btn.btn-sky-blue:hover, .btn.btn-sky-blue:focus { background: transparent; color: #2e94eb; }
-.btn.btn-yellow-ochre { background: #00B8B8; border-color: #c89965; color: #ffffff; }
+.btn.btn-yellow-ochre { background: #c89965; border-color: #c89965; color: #ffffff; }
 .btn.btn-yellow-ochre:hover, .btn.btn-yellow-ochre:focus { background: transparent; color: #c89965; }
 .btn.btn-fast-yellow { background: #F4D956; border-color: #F4D956; color: #232323; }
 .btn.btn-fast-yellow:hover, .btn.btn-fast-yellow:focus { background: transparent; color: #F4D956; }

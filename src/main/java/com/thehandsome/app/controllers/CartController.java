@@ -1,6 +1,7 @@
 package com.thehandsome.app.controllers;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +27,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.thehandsome.app.dto.CartDTO;
 import com.thehandsome.app.dto.DepartmentDTO;
-import com.thehandsome.app.dto.ProductcolorDTO;
+import com.thehandsome.app.dto.ProductColorDTO;
 import com.thehandsome.app.dto.ProductsizeDTO;
 import com.thehandsome.app.service.CartService;
 import com.thehandsome.app.service.DepartmentService;
@@ -56,21 +57,16 @@ public class CartController {
 
 		boolean isUser = false; 
 		try {
-			//임의 session id 
-			session.setAttribute("id", "ming");
-			
-			String userId = (String) session.getAttribute("id");
-			List<CartDTO> cartDTO = cartService.getCartList(userId);
-			List<DepartmentDTO> departmentDTO = departmentService.getDepartmentList();
-			total_cart(session);
 			
 			if(session.getAttribute("id") != null) {
 				isUser = true;
 			}
+				String userId = (String) session.getAttribute("id");
+				List<CartDTO> cartDTO = cartService.getCartList(userId);
+				total_cart(session);
 			
 			mav.addObject("isUser", isUser);
 			mav.addObject("cartDTO", cartDTO);
-			mav.addObject("departmentDTO", departmentDTO);
 			mav.addObject("url", "/app/cart");
 			mav.setViewName("Cart");
 		} catch (Exception e) {
@@ -95,7 +91,7 @@ public class CartController {
 		JSONObject jObject = new JSONObject(strjson);
 		String product_id = jObject.getString("product_id");
 		
-		List<ProductcolorDTO> colorDTO = productService.getColorList(product_id);
+		List<ProductColorDTO> colorDTO = productService.getColorList(product_id);
 		List<ProductsizeDTO> sizeDTO = productService.getSizeList(product_id);
 		result.put("colorlist", colorDTO);
 		result.put("sizelist", sizeDTO);
@@ -164,8 +160,9 @@ public class CartController {
 	}
 	
 	@GetMapping(value = "/cart/insert/{pid}/{color}/{size}")
-	public @ResponseBody String cart_insert(@PathVariable("pid") String pid, @PathVariable("color") String color,  @PathVariable("size") String size,
-			HttpServletRequest request, HttpSession session) throws Exception {
+	@ResponseBody
+	public String cart_insert(@PathVariable("pid") String pid, @PathVariable("color") String color,  @PathVariable("size") String size,
+			 HttpServletRequest request, HttpSession session) throws Exception {
 
 		String userId = (String) session.getAttribute("id");
 		CartDTO cartDTO = new CartDTO();
@@ -174,6 +171,32 @@ public class CartController {
 		cartDTO.setQuantity(1);
 		cartDTO.setColor(color);
 		cartDTO.setSizelabel(size);
+		
+		total_cart(session);
+		
+		try {
+			cartService.insertCart(cartDTO);
+			return "Success";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+	
+	@GetMapping(value = "/cart/insert/{pid}/{color}/{size}/{quantity}")
+	@ResponseBody
+	public String cart_insert_q(@PathVariable("pid") String pid, @PathVariable("color") String color,  @PathVariable("size") String size,
+			@PathVariable("quantity") int quantity, HttpServletRequest request, HttpSession session) throws Exception {
+
+		String userId = (String) session.getAttribute("id");
+		CartDTO cartDTO = new CartDTO();
+		cartDTO.setUser_id(userId);
+		cartDTO.setProduct_id(pid);
+		cartDTO.setQuantity(quantity);
+		cartDTO.setColor(color);
+		cartDTO.setSizelabel(size);
+		total_cart(session);
 		
 		try {
 			cartService.insertCart(cartDTO);

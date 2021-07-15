@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thehandsome.app.dao.RecommendDAO">
+
+	<insert id="insertUserActivity" parameterType="UserActivityDTO">
+		<![CDATA[
+			INSERT INTO USER_ACTIVITY(MEMBER_ID, PRODUCT_ID, LAST_DATE, RATING, CLICK_NUM, STAY_TIME, IS_LIKE, P_RATING, P_CLICK_NUM, P_STAY_TIME, PREFERENCE)
+			VALUES(#{member_id}, #{product_id}, sysdate, #{rating}, #{click_num}, #{stay_time}, #{is_like}, #{p_rating}, #{p_click_num}, #{p_stay_time}, #{preference})
+		]]>
+	</insert>
+	
+	<select id="checkUserActivity" parameterType="UserActivityDTO" resultType="long">
+		<![CDATA[
+	    	SELECT COUNT(*)
+	    	FROM USER_ACTIVITY
+	    	WHERE
+	    		MEMBER_ID = #{member_id} AND
+				PRODUCT_ID = #{product_id}
+		]]>
+   	</select>
+	
+	<select id="getUserActivity" parameterType="UserActivityDTO" resultType="UserActivityDTO">
+		<![CDATA[
+			SELECT *
+			FROM USER_ACTIVITY
+			WHERE 
+				MEMBER_ID = #{member_id} AND
+				PRODUCT_ID = #{product_id}
+		]]>
+	</select>
+	
+	<select id="getMaxUserActivity" parameterType="String" resultType="UserActivityDTO">
+		<![CDATA[
+			SELECT MAX(CLICK_NUM) CLICK_NUM, MAX(STAY_TIME) STAY_TIME
+			FROM USER_ACTIVITY
+			WHERE MEMBER_ID = #{member_id}
+		]]>
+	</select>
+	
+	<select id="getSumUserActivity" parameterType="String" resultType="UserActivityDTO">
+		<![CDATA[
+			SELECT SUM(P_RATING) P_RATING, SUM(P_CLICK_NUM) P_CLICK_NUM, SUM(P_STAY_TIME) P_STAY_TIME, COUNT(*) IS_LIKE
+			FROM USER_ACTIVITY
+			WHERE MEMBER_ID = #{member_id}
+			GROUP BY MEMBER_ID
+		]]>
+	</select>
+	
+	<update id="updateUserActivity" parameterType="UserActivityDTO">
+		<![CDATA[
+			UPDATE USER_ACTIVITY
+			SET
+				LAST_DATE = SYSDATE,
+				RATING = #{rating},
+				CLICK_NUM = #{click_num},
+				STAY_TIME = #{stay_time},
+				IS_LIKE = #{is_like},
+				P_RATING = #{p_rating},
+				P_CLICK_NUM = #{p_click_num},
+				P_STAY_TIME = #{p_stay_time},
+				PREFERENCE = #{preference}
+			WHERE
+				MEMBER_ID = #{member_id} AND
+				PRODUCT_ID = #{product_id}
+		]]>
+	</update>
+	
+	<select id="getLastMemberActivity" parameterType="String" resultType="ProductDTO">
+		<![CDATA[
+			SELECT *
+			FROM (
+			    SELECT P.*
+			    FROM PRODUCT P, USER_ACTIVITY U
+			    WHERE P.ID = U.PRODUCT_ID AND U.MEMBER_ID = #{member_id}
+			    ORDER BY LAST_DATE DESC
+			)
+			WHERE ROWNUM <= 1
+		]]>
+	</select>
+	
+	<select id="getProductDetail" parameterType="String" resultType="ProductDTO">
+		<![CDATA[
+			SELECT P.*, B.NAME BRANDNAME, C.IMAGEPATH
+			FROM PRODUCT P, BRAND B, PRODUCTCOLOR C
+			WHERE P.BRAND_ID = B.ID AND P.ID = C.PRODUCT_ID AND P.ID = #{id} AND ROWNUM <= 1
+		]]>
+	</select>
+	
+	<select id="getFirstMemberRecommend" parameterType="int" resultType="ProductDTO">
+		<![CDATA[
+			SELECT *
+			FROM 
+			(
+				SELECT P.*, B.NAME BRANDNAME, C.IMAGEPATH
+				FROM PRODUCT P, BRAND B, PRODUCTCOLOR C
+                WHERE P.BRAND_ID = B.ID AND P.ID = C.PRODUCT_ID AND P.BRAND_ID = #{BRAND_ID}
+                ORDER BY DBMS_RANDOM.RANDOM
+--				ORDER BY SEARCHED DESC
+			)
+            WHERE ROWNUM <= 10
+		]]>
+	</select>
+
+	<select id="getNotMemberRecommend" resultType="ProductDTO">
+		<![CDATA[
+			SELECT *
+			FROM 
+			(
+				SELECT P.*, B.NAME BRANDNAME, C.IMAGEPATH
+				FROM PRODUCT P, BRAND B, PRODUCTCOLOR C
+                WHERE P.BRAND_ID = B.ID AND P.ID = C.PRODUCT_ID
+                ORDER BY DBMS_RANDOM.RANDOM
+			)
+            WHERE ROWNUM <= 10
+		]]>
+	</select>
+	
+</mapper>

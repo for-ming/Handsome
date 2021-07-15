@@ -13,15 +13,16 @@ String user = (String) session.getAttribute("id");
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="author" content="Group3">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,maximum-scale=1" />
 <meta name="description" content="더한섬닷컴 | THE HANDSOME.COM">
 
 <!-- favicon icon -->
-<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png">
-<link rel="apple-touch-icon" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="72x72" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="114x114" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-114x114.png">
-
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/icon/favicon.png">
+<link rel="apple-touch-icon" href="${pageContext.request.contextPath}/resources/icon/favicon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="${pageContext.request.contextPath}/resources/icon/favicon.png">
+<link rel="apple-touch-icon" sizes="114x114" href="${pageContext.request.contextPath}/resources/icon/favicon.png">
+	
 <!-- style sheets and font icons  -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/font-icons.min.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/theme-vendors.min.css">
@@ -75,7 +76,7 @@ function order(){
 		dataType: "text",
 		contentType: "application/json",
 		success : function (result) { 
-					window.location.href = "/app/order";
+					window.location.href = "${pageContext.request.contextPath}/order";
 				  }
 	});
 }
@@ -153,7 +154,7 @@ function order(){
 								<label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-100px">${cart.quantity}</label>
 							</div>
 						</td>
-						<td class="product-price" data-title="price"><label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-100px">￦<fmt:formatNumber pattern="###,###,###" value="${cart.price}" /></label></td>
+						<td class="product-price" data-title="price"><label class="text-extra-dark-gray text-extra-small font-weight-500 alt-font text-uppercase w-100px">￦<fmt:formatNumber pattern="###,###,###" value="${cart.price * cart.quantity}" /></label></td>
 						</tr>
 				</c:forEach>
 			</tbody>
@@ -271,7 +272,7 @@ function order(){
                             <c:forEach var="cart" items="${cartDTO}" varStatus="status">
                                 <tr class="text-dark-gray">
                                     <td>${cart.title} × ${cart.quantity}<span class="d-block w-100">Size: ${cart.sizelabel}</span></td>
-                                    <td>￦ <fmt:formatNumber pattern="###,###,###" value="${cart.price}" /></td>
+                                    <td>￦ <fmt:formatNumber pattern="###,###,###" value="${(cart.price * cart.quantity)}" /></td>
                                 </tr>
                              <c:set var="sum" value="${sum + (cart.price * cart.quantity)}" />
                              </c:forEach>

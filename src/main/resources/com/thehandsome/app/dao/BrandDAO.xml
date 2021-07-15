@@ -2,11 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thehandsome.app.dao.BrandDAO">
+
+	<select id="selectAllBrand" resultType="BrandDTO">
+
+		select *
+		from brand
+
+	</select>
+
+	<select id="selectBrandIdByName" parameterType="String"
+		resultType="int">
+
+		select id
+		from brand
+		where name = upper(#{brandName})
+
+	</select>
+
+	<select id="getBrandInfo" resultType="BrandDTO">
+		<![CDATA[
+			SELECT	*
+			FROM	brand
+			WHERE	id = (	SELECT	brand_id
+							FROM	branch
+							WHERE	id = (	SELECT 	branch_id
+											FROM	admin
+											WHERE	id = #{id} AND password = #{password}))
+		]]>
+	</select>
+
+	<select id="getBrandName" resultType="BrandDTO">
+		<![CDATA[
+			SELECT	*
+			FROM	brand
+			WHERE	id = #{id}
+		]]>
+	</select>
 	<select id="getBrandList" resultType="BrandDTO">
 		<![CDATA[
 		SELECT id, name
 		FROM Brand
 		]]>
 	</select>
-
 </mapper>

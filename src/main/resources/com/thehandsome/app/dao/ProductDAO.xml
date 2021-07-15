@@ -1,29 +1,261 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thehandsome.app.dao.ProductDAO">
 
-	<select id="getProductInfo" parameterType="String" resultType="ProductDTO">
-		<![CDATA[
-		SELECT id, brandId, sex, title, price, maincategory_id, subcategory_id, shortdetail, longdetail
-		FROM product
-		WHERE id like #{id}
-		]]>
-	</select>
 
-	<select id="getColorList" parameterType="String" resultType="ProductcolorDTO">
-		<![CDATA[
-		SELECT product_id, color, imagepath
-		FROM ProductColor
-		WHERE ProductColor.product_id like #{product_id}
-		]]>
+   <select id="getProductByBrand" 
+      parameterType="int" resultType="ProductDTO">
+   <![CDATA[
+      select *
+      from product
+      where brand_id=#{brandid}
+      
+       ]]>
+   </select>
+   
+   <select id="getProductcolorByID"
+      parameterType="String" resultType="ProductColorDTO">
+   <![CDATA[
+      select *
+      from productcolor
+      where product_id=#{productid}
+      
+       ]]>
+   </select>
+   
+   <select id="getProductImageById" 
+      parameterType="String" resultType="ProductColorDTO">
+   <![CDATA[
+      select productid, imagePath
+      from productcolor
+      where product_id=#{productid}
+      
+       ]]>
+   </select>
+   
+   <select id="getSubcategoryByGender" 
+      parameterType="String" resultType="int">
+   <![CDATA[
+      select subcategory_id
+      from gendersubcategory
+      where gender=#{gender}
+      
+       ]]>
+   </select>
+   
+      <select id="getProductByGenderandSubcategory" 
+      parameterType="hashmap" resultType="ProductDTO">
+   <![CDATA[
+      select *
+      from product
+      where sex=#{gender} and subcategory_id=#{subcategoryid} and rownum=1
+      
+       ]]>
+   </select>
+   
+   <select id="getProductlistByGenderMaincategory" 
+      parameterType="hashmap" resultType="ProductDTO">
+   <![CDATA[
+      select *
+      from product
+      where sex=#{gender} and maincategory_id=#{maincategoryid}
+      
+       ]]>
+   </select>
+   <select id="getProductlistByTitle" 
+      parameterType="String" resultType="ProductDTO">
+   <![CDATA[
+      select *
+      from product
+      where title like '%' || #{product_title} || '%'
+      
+       ]]>
+   </select>
+   
+   <select id="getMaincategoryName" 
+      parameterType="int" resultType="String">
+   <![CDATA[
+      select name
+      from maincategory
+      where id=#{maincategoryId}
+      
+       ]]>
+   </select>
+   
+   <select id="getSubcategoryName" 
+      parameterType="int" resultType="String">
+   <![CDATA[
+      select name
+      from subcategory
+      where id=#{subcategoryId}
+      
+       ]]>
+   </select>
+   
+   
+   <select id="getProductlistByGenderMainSubcategory" 
+      parameterType="hashmap" resultType="ProductDTO">
+   <![CDATA[
+      select *
+      from product
+      where sex=#{gender} and maincategory_id=#{maincategoryid} and subcategory_id=#{subcategoryid}
+      
+       ]]>
+   </select>
+   
+   <select id="getProductInfo" resultType="ProductDTO">
+      <![CDATA[
+         SELECT   *
+         FROM   PRODUCT
+         WHERE    id = #{productID}
+      ]]>
+   </select>
+   
+   <select id="getColorList" parameterType="String" resultType="ProductcolorDTO">
+      <![CDATA[
+      SELECT product_id, color, imagepath
+      FROM ProductColor
+      WHERE ProductColor.product_id like #{product_id}
+      ]]>
+   </select>
+   
+   <select id="getSizeList" parameterType="String" resultType="ProductsizeDTO">
+      <![CDATA[
+      SELECT product_id, sizelabel
+      FROM ProductSize
+      WHERE ProductSize.product_id like #{product_id}
+      ]]>
+   </select>
+
+      <select id="selectProductById" 
+      parameterType="String" resultType="ProductDTO">
+   <![CDATA[
+      select *
+      from product
+      where id=#{product_id}
+      
+       ]]>
+   </select>
+   
+      <select id="selectProductSizeById" 
+      parameterType="String" resultType="ProductsizeDTO">
+   <![CDATA[
+      select *
+      from productsize
+      where product_id=#{product_id}
+      
+       ]]>
+   </select>
+   
+   <select id="getProductDTOAll" parameterType="String" resultType="ProductDTO">
+      <![CDATA[
+      SELECT Product.*, Brand.name as brandname, ProductColor.imagepath
+      FROM ProductColor, Product, Brand
+      WHERE product.brand_id = brand.id and product.id like ProductColor.product_id and Product.id like #{product_id} and ProductColor.color like #{color}
+      ]]>
+   </select>
+
+   <select id="getProductSelectedById" 
+      parameterType="String" resultType="int">
+   <![CDATA[
+      select searched
+      from product
+      where id=#{product_id}
+      
+       ]]>
+   </select>
+   
+   <update id="updateProductSelectedById" parameterType="hashmap">
+      update product
+      set searched=#{searched}
+      where id=#{product_id}
+   </update>
+   
+   
+   <select id="getReviewListByProdutId" 
+      parameterType="String" resultType="ReviewDTO">
+   <![CDATA[
+      select *
+      from review
+      where product_id=#{product_id}
+      
+       ]]>
+   </select>
+   
+      <select id="getAllMainColorlist" 
+      resultType="MainColorDTO">
+   <![CDATA[
+      select *
+      from maincolor
+      
+       ]]>
+   </select>
+   
+   <select id="getCountProductByGender" parameterType="String"
+      resultType="int">
+   <![CDATA[
+      select count(*)
+      from product
+      where sex=#{gender}
+      
+       ]]>
+   </select>
+   
+      <select id="getCountProductByGenderMaincategory" parameterType="hashmap"
+      resultType="int">
+   <![CDATA[
+      select count(*)
+      from product
+      where sex=#{gender} and maincategory_id = #{maincategory_id}
+      
+       ]]>
+   </select>
+   
+      <select id="getCountProductByGenderMainSubcategory" parameterType="hashmap"
+      resultType="int">
+   <![CDATA[
+      select count(*)
+      from product
+      where sex=#{gender} and maincategory_id = #{maincategory_id} and subcategory_id = #{subcategory_id} 
+      
+       ]]>
+   </select>
+   
+   <insert id="insertreview" parameterType="ReviewDTO">
+   	insert into review (member_id,product_id,rating,comments)
+   	values(#{member_id},#{product_id},#{rating},#{comments})
+   	
+   </insert>
+   
+   <select id="getAllSubcolor" parameterType="String"
+      resultType="SubColorDTO">
+   <![CDATA[
+      select *
+      from subcolor
+      where maincolor=#{maincolor} 
+      
+       ]]>
+   </select>
+   
+   <select id="getFirstProduct" resultType="ProductDTO">
+	   <![CDATA[
+	      SELECT *
+	      FROM PRODUCT
+	      WHERE ID IN (SELECT STATS_MODE(PRODUCT_ID)
+	      			  FROM BUYING_HISTORY
+	      			  WHERE STOCK = 1)
+	   ]]>
+   </select>
+
+   <select id="getTotalPrice" resultType="ProductDTO">
+	   <![CDATA[
+	      SELECT *
+	      FROM PRODUCT
+	      WHERE ID IN (SELECT PRODUCT_ID
+	      			  FROM BUYING_HISTORY
+	      			  WHERE STOCK = 1)
+	   ]]>
 	</select>
 	
-	<select id="getSizeList" parameterType="String" resultType="ProductsizeDTO">
-		<![CDATA[
-		SELECT product_id, sizelabel
-		FROM ProductSize
-		WHERE ProductSize.product_id like #{product_id}
-		]]>
-	</select>
 </mapper>

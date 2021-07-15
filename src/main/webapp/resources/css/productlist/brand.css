@@ -1,0 +1,36 @@
+@charset "UTF-8";
+
+.colorscontainer{
+	display:flex;
+	align-content: center;
+	justify-content: center;
+}
+
+.colorcontainer{
+	width:10px;
+	height:10px;
+	margin:0 2px;
+}
+
+.productdetail{
+	background-color:white;
+	width:100%;
+	padding:10px 0;
+
+}
+
+.detailcontainer{
+	height:30px;
+}
+
+.product-hover-bottom{
+	display:flex;
+	justify-content: center;
+	padding:20px 20px;
+	
+}
+
+.move-top-bottom{
+	width:100%;
+	color: black !important;
+}

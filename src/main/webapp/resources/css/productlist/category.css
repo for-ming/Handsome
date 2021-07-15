@@ -1,0 +1,181 @@
+@charset "UTF-8";
+
+
+.product-listing{
+	min-height:800px;
+}
+
+.colorscontainer{
+	display:flex;
+	align-content: center;
+	justify-content: center;
+}
+
+.colorcontainer{
+	width:10px;
+	height:10px;
+	margin:0 2px;
+	border:0.2px solid gray;
+}
+
+
+.productdetail{
+	background-color:white;
+	width:100%;
+	padding:10px 0;
+
+}
+
+.detailcontainer{
+	height:30px;
+}
+
+.product-hover-bottom{
+	display:flex;
+	justify-content: center;
+	padding:20px 20px;
+	
+}
+
+.move-top-bottom{
+	width:100%;
+	color: black !important;
+}
+
+.categorycontainer{
+	display:flex;
+	align-content: center;
+	justify-content: center;
+}
+
+.categoryicon{
+	margin:0 10px;
+}
+.shopping-content{
+	position:relative;
+}
+
+.filtercontainer{
+	display:flex;
+	position:relative;
+	align-content:center;
+	justify-content:space-between;
+	margin:0 15px;
+	z-index: 2;
+
+}
+
+.eachfilter{
+	width:200px;
+	float:left;
+	position:relative;
+	margin-right:20px;
+}
+.list{
+	position:absolute;
+	overflow-y:auto;
+}
+
+.product-listing{
+	z-index: 1;
+}
+.select{
+	display:flex;
+
+}
+.filtertitle{
+	margin-right:15px;
+	font-weight: bold;
+	color:black;
+}
+.filterselected{
+	margin-right:15px;
+	text-overflow: ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+	max-width:100px;
+	height:30px;
+}
+.list{
+	height:300px;
+	background-color:white;
+	border:0.3px solid gray;
+	padding:4px;
+	margin-top:15px;
+	display:none;
+}
+
+.filterclicked{
+	display:block;
+}
+
+.eachlist{
+	display:flex;
+	align-content: center;
+	width:200px;
+}
+
+.filter_buttons{
+	display:flex;
+	width:100px;
+	justify-content: space-between;
+}
+.total_products{
+	display:flex;
+	justify-content:flex-end; 
+	margin-right:0;
+}
+.total{
+	margin-left:20px;
+}
+
+.checkcontainer{
+	margin-right:4px;
+}
+
+.inputcheck{
+	margin:0;
+}
+
+.arrow{
+	width:10px;
+	height:10px;
+	
+}
+
+.colorlist{
+	padding:0 !important;
+	width:20px !important;
+	height:20px !important;
+}
+
+.colorfilter{
+	padding:10px;
+}
+
+.eachcolorlist{
+	margin-bottom:10px;
+}
+
+.title{
+		text-overflow: ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+}
+
+a:link{
+	  color: black; 
+	 text-decoration:none;
+}
+a:visited{
+	  color: black; 
+	 text-decoration:none;
+}
+a:hover{
+	  color: black; 
+	 text-decoration:none;
+}
+a:active{
+	  color: black; 
+	 text-decoration:none;
+}

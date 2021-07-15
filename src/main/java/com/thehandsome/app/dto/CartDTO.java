@@ -1,9 +1,12 @@
 package com.thehandsome.app.dto;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 @Data
-public class CartDTO {
+public class CartDTO implements Serializable {
+
 	private String user_id;
 	private String product_id;
 	private int quantity;
@@ -17,7 +20,8 @@ public class CartDTO {
 	private int mainCategory_id;
 	private int subCategory_id;
 	
-	public String getProductId() {
+	public String getProduct_id() {
 		return product_id;
 	}
+
 }

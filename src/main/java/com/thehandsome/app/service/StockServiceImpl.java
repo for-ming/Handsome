@@ -9,16 +9,30 @@ import org.springframework.stereotype.Service;
 import com.thehandsome.app.dao.StockDAO;
 import com.thehandsome.app.dto.StockDTO;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
-public class StockServiceImpl implements StockService{
+public class StockServiceImpl implements StockService {
 	@Autowired
-	private StockDAO stockDAO;
+	StockDAO stockDAO;
 	
 	@Override
-	public StockDTO getStock(HashMap<String, Object> map) throws SQLException{
-		return stockDAO.getStock(map);
+	public StockDTO getStockInfo(HashMap<String, Object> map) throws SQLException{
+		return stockDAO.getStockInfo(map);
+	}
+	
+	@Override
+	public StockDTO getStock(int department, int brand, String sizeLabel, String color, int quantity) throws SQLException {
+		return stockDAO.getStock(department, brand, sizeLabel, color, quantity);
+	}
+
+	@Override
+	public void minusStock(int destination, String product_id, String sizeLabel, String color, int quantity)
+			throws SQLException {
+		stockDAO.minusStock(destination, product_id, sizeLabel, color, quantity);
+	}
+
+	@Override
+	public void plusStock(int departure, String product_id, String sizeLabel, String color, int quantity, int id)
+			throws SQLException {
+		stockDAO.plusStock(departure, product_id, sizeLabel, color, quantity, id);
 	}
 }

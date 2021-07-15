@@ -3,11 +3,63 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thehandsome.app.dao.MemberDAO">
 
-	<select id="getMemberInfo" parameterType="String" resultType="MemberDTO">
+
+	<select id="selectMemberById" 
+		parameterType="hashmap" resultType="MemberDTO">
+	<![CDATA[
+		select *
+		from member
+		where id=#{ID}
+		
+       ]]>
+	</select>
+	
+	
+
+	<select id="selectMemberByPhone" parameterType="hashmap" resultType="MemberDTO">
+	<![CDATA[
+		select *
+		from member
+		where phone=#{PHONE}
+		
+       ]]>
+	</select>
+	
+	
+	<select id="selectMemberByIdPassword" 
+		parameterType="MemberDTO" resultType="MemberDTO">
+	<![CDATA[
+		select *
+		from member
+		where id=#{id} and password=#{password}
+		
+       ]]>
+	</select>
+	
+	
+	<insert id="insertMember" parameterType="MemberDTO">
+	<![CDATA[
+		insert into member(id, password, name, birth, age, gender, address, phone, prefer_brand_id, prefer_department_id) 
+		values (#{id}, #{password}, #{name}, #{birth}, #{age}, #{gender}, #{address}, #{phone}, #{prefer_brand_id}, #{prefer_department_id})
+		
+       ]]>
+	</insert>
+	
+	<select id="getMember" parameterType="String" resultType="MemberDTO">
 		<![CDATA[
-		SELECT id, name, gender, address, phone, birth, age, prefer_brand_id, prefer_department_id
-		FROM member
-		WHERE id like #{id}
+			SELECT	*
+			FROM	MEMBER
+			WHERE 	id IN #{member_id}
+		]]>
+	</select>
+	
+	<select id="getBuyingMemberList" resultType="MemberDTO">
+		<![CDATA[
+			SELECT *
+			FROM MEMBER
+			WHERE ID IN (SELECT MEMBER_ID
+						FROM BUYING_HISTORY
+						WHERE STOCK = 1)
 		]]>
 	</select>
 </mapper>

@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class Buying_HistoryDTO implements Serializable {
+
 	private int id;
 	private String member_id;
 	private String product_id;

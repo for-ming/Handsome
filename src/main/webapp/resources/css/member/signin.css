@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+
+
+
+
+
+.invalid-feedback{
+	height:20px;
+}
+.flexdisplay{
+	display:flex;
+	height:50px;
+	align-content: center;
+}
+
+#loginbutton{
+	margin-top:20px;
+}
+
+.inputcontainer{
+	border-radius:.25rem;
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thehandsome.app.dao.ProductColorDAO">
+	<select id="getProductColor" resultType="ProductColorDTO">
+		<![CDATA[
+			SELECT	*
+			FROM	PRODUCTCOLOR
+			WHERE product_id = #{product_id} AND color = #{color}
+		]]>
+	</select>
+</mapper>

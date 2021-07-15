@@ -10,6 +10,11 @@
         <meta name="author" content="Group3">
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
         <meta name="description" content="더한섬닷컴 | THE HANDSOME.COM">
+        <!-- favicon icon -->
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.png">
+        <link rel="apple-touch-icon" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-57x57.png">
+        <link rel="apple-touch-icon" sizes="72x72" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-72x72.png">
+        <link rel="apple-touch-icon" sizes="114x114" href="${pageContext.request.contextPath}/resources/images/apple-touch-icon-114x114.png">
         <!-- style sheets and font icons  -->
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/font-icons.min.css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/theme-vendors.min.css">
@@ -21,7 +26,7 @@
         <jsp:include page="Header.jsp"></jsp:include>
         <!-- end header -->
         <!-- start page title -->
-        <section class="half-section parallax" data-parallax-background-ratio="0.5" style="background-image:url('images/portfolio-bg.jpg');">
+        <section class="half-section parallax" data-parallax-background-ratio="0.5">
             <div class="container">
                 <div class="row align-items-stretch justify-content-center extra-small-screen">
                     <div class="col-12 col-xl-6 col-lg-7 col-md-8 page-title-extra-small text-center d-flex justify-content-center flex-column">

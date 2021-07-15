@@ -8,14 +8,14 @@
 		<![CDATA[
 		SELECT Cart.user_id, Cart.product_id, Cart.quantity, Cart.sizelabel, Cart.color, ProductColor.imagepath, Brand.name as brand_name, Product.title, Product.price, Product.sex, Product.mainCategory_id, Product.subCategory_id
 		FROM Cart, ProductColor, Product, Brand
-		WHERE cart.user_id = #{user_id} and cart.product_id like Product.id and product.brand_id = brand.id and cart.product_id like ProductColor.product_id and cart.color=productColor.color
+		WHERE cart.user_id = #{user_id} and cart.product_id like Product.id and product.brand_id = brand.id and cart.product_id like ProductColor.product_id and cart.color LIKE productColor.color
 		]]>
 	</select>
 
 	<insert id="insertCart" parameterType="CartDTO">
 		INSERT INTO
 		Cart(user_id, product_id, quantity, color, sizelabel)
-		VALUES(#{user_id}, #{product_id}, #{quantity}, #{color}, #{sizelabel})
+		VALUES(#{user_id}, #{product_id}, #{quantity}, lower(#{color}), #{sizelabel})
 	</insert>
 
 	<delete id="deleteCart" parameterType="CartDTO">

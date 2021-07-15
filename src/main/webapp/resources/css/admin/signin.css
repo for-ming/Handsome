@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+
+
+
+
+
+.invalid-feedback{
+	height:20px;
+}
+.flexdisplay{
+	display:flex;
+	height:50px;
+	align-content: center;
+}
+
+#loginbutton{
+	margin-top:20px;
+}
+
+.inputcontainer{
+	border-radius:.25rem;
+}
+
+.background{
+		background:linear-gradient(to right, #556fff,#556fff,#e05fc4,#f767a6,#ff798e);
+		border:0;
+}
+

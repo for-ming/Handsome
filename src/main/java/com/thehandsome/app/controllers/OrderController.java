@@ -35,7 +35,6 @@ import com.thehandsome.app.service.CartService;
 import com.thehandsome.app.service.DepartmentService;
 import com.thehandsome.app.service.Import_And_ExportService;
 import com.thehandsome.app.service.MemberService;
-import com.thehandsome.app.service.ProductService;
 import com.thehandsome.app.service.StockService;
 import com.thehandsome.app.utils.DateFormatClass;
 
@@ -81,7 +80,7 @@ public class OrderController {
 
 		try {
 			String userId = (String) session.getAttribute("id");
-			MemberDTO memberDTO = memberService.getMemberInfo(userId);
+			MemberDTO memberDTO = memberService.getMember(userId);
 			List<CartDTO> cartDTO = cartService.getCartList(userId);
 			List<DepartmentDTO> departmentDTO = departmentService.getDepartmentList();
 			
@@ -106,7 +105,7 @@ public class OrderController {
 
 		try {
 			String userId = (String) session.getAttribute("id");
-			MemberDTO memberDTO = memberService.getMemberInfo(userId);
+			MemberDTO memberDTO = memberService.getMember(userId);
 			List<CartDTO> cartDTO = cartService.getCartList(userId);
 			List<DepartmentDTO> departmentDTO = departmentService.getDepartmentList();
 			if(check == null) {
@@ -144,7 +143,7 @@ public class OrderController {
 			String str = jObject.get("product").toString();
 			
 			for(int i=0; i<cartDTO.size(); i++) {
-				if(str.contains(cartDTO.get(i).getProductId())) {
+				if(str.contains(cartDTO.get(i).getProduct_id())) {
 				}
 				else cartDTO.remove(i);
 			}
@@ -196,37 +195,47 @@ public class OrderController {
 			List<CartDTO> cartDTO = cartService.getCartList(userId);
 			List<BrandDTO> brandDTO = brandService.getBrandList();
 			for(int i=0; i<cartDTO.size(); i++) {
-				if(str.contains(cartDTO.get(i).getProductId())) {
+				if(str.contains(cartDTO.get(i).getProduct_id())) {
 					Buying_HistoryDTO buying_HistoryDTO = new Buying_HistoryDTO();
-					HashMap<String, Object> map = new HashMap<String, Object>();
-					map.put("productId", cartDTO.get(i).getProductId());
-					map.put("departmentId", department);
-					StockDTO stockDTO = stockService.getStock(map);
-					
-					buying_HistoryDTO.setMember_id(userId);
-					buying_HistoryDTO.setProduct_id(cartDTO.get(i).getProductId());
-					buying_HistoryDTO.setDepartment_id(department);
-					for(int j=0; j<brandDTO.size(); j++) {
-						if(brandDTO.get(j).getName().equals(cartDTO.get(i).getBrand_name())) {
-							buying_HistoryDTO.setBrand_id(brandDTO.get(j).getId());
-							break;
+					StockDTO stockDTO = new StockDTO();
+					if(rec_method.equals("pickup")) {
+						// 지점에서 픽업 시
+						HashMap<String, Object> map = new HashMap<String, Object>();
+						map.put("product_id", cartDTO.get(i).getProduct_id());
+						map.put("department_id", department);
+						stockDTO = stockService.getStockInfo(map);
+						System.out.println("stock"+stockDTO + "" +  cartDTO.get(i).getQuantity());
+						buying_HistoryDTO.setDepartment_id(department);
+						if(stockDTO.getQuantity() >= cartDTO.get(i).getQuantity()) {
+							buying_HistoryDTO.setStock(1);
 						}
+						else
+							buying_HistoryDTO.setStock(0);
 					}
+					else {
+						// 배송 요청 시
+						buying_HistoryDTO.setDepartment_id(17);
+						buying_HistoryDTO.setStock(1);
+					}
+						buying_HistoryDTO.setMember_id(userId);
+						buying_HistoryDTO.setProduct_id(cartDTO.get(i).getProduct_id());
+						
+						for(int j=0; j<brandDTO.size(); j++) {
+							if(brandDTO.get(j).getName().equals(cartDTO.get(i).getBrand_name())) {
+								buying_HistoryDTO.setBrand_id(brandDTO.get(j).getId());
+								break;
+							}
+						}
 					buying_HistoryDTO.setPurchase_date(now);
 					buying_HistoryDTO.setQuantity(cartDTO.get(i).getQuantity());
 					buying_HistoryDTO.setSizelabel(cartDTO.get(i).getSizelabel());
 					buying_HistoryDTO.setColor(cartDTO.get(i).getColor());
 					buying_HistoryDTO.setRec_method(rec_method);
-					if(stockDTO.getQuantity() >= cartDTO.get(i).getQuantity()) {
-						buying_HistoryDTO.setStock(1);
-					}
-					else
-						buying_HistoryDTO.setStock(0);
 					buying_HistoryDTO.setComplete(0);
+					System.out.println("Insert 구매내역" + buying_HistoryDTO);
 					
 					buying_HistoryService.insertBuying_History(buying_HistoryDTO);
 					cartService.deleteCart(cartDTO.get(i));
-					System.out.println("Insert 구매내역" + buying_HistoryDTO);
 					
 				}
 				else cartDTO.remove(i);
@@ -236,7 +245,7 @@ public class OrderController {
 			List<Buying_HistoryDTO> buyinglist = buying_HistoryService.getBuying_HistoryList(userId);
 			for(int i=0; i<buyinglist.size(); i++) {
 				for(int k=0; k<cartDTO.size(); k++) {
-				if(buyinglist.get(i).getStock() == 0 && buyinglist.get(i).getProduct_id().equals(cartDTO.get(k).getProductId())) {
+				if(buyinglist.get(i).getStock() == 0 && buyinglist.get(i).getProduct_id().equals(cartDTO.get(k).getProduct_id())) {
 					Import_And_ExportDTO import_And_ExportDTO = new Import_And_ExportDTO();
 					import_And_ExportDTO.setBuying_history_id(buyinglist.get(i).getId());
 					for(int j=0; j<branchDTO.size(); j++) {
@@ -245,7 +254,7 @@ public class OrderController {
 						}
 					}
 					import_And_ExportDTO.setDestination(0);
-					import_And_ExportDTO.setState("발송 요청");
+					import_And_ExportDTO.setState("발송요청");
 					import_And_ExportService.insertImport_And_Export(import_And_ExportDTO);
 				}
 				}

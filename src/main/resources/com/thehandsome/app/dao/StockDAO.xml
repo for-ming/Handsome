@@ -2,12 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thehandsome.app.dao.StockDAO">
-
+	<select id="getStock" resultType="StockDTO">
+		<![CDATA[
+			SELECT 	*
+			FROM 	STOCK
+			WHERE	BRANCH_ID = (SELECT ID
+								 FROM	BRANCH
+								 WHERE	DEPARTMENT_ID = #{department} AND BRAND_ID = #{brand})
+			AND		SIZELABEL =		#{sizeLabel}
+			AND		COLOR	  =		#{color}
+			AND		QUANTITY  >=	#{quantity}
+		]]>
+	</select>
+	<update id="minusStock">
+		<![CDATA[
+			UPDATE 	STOCK
+			SET 	QUANTITY   =  QUANTITY - #{quantity}
+			WHERE	BRANCH_ID  =  #{destination}
+			AND		PRODUCT_ID =  #{product_id}
+			AND		SIZELABEL  =  #{sizeLabel}
+			AND		COLOR	   =  #{color}
+		]]>
+	</update>
+	<update id="plusStock">
+		<![CDATA[
+			UPDATE 	STOCK
+			SET 	QUANTITY   =  QUANTITY + #{quantity}
+			WHERE	BRANCH_ID  =  #{departure}
+			AND		PRODUCT_ID =  #{product_id}
+			AND		SIZELABEL  =  #{sizeLabel}
+			AND		COLOR	   =  #{color}
+		]]>
+	</update>
+	
 	<parameterMap type="java.util.HashMap" id="stockMap">
 		<parameter property="product_id" jdbcType="VARCHAR" mode="IN" />
 		<parameter property="department_id" jdbcType="INTEGER"	mode="IN" />
 	</parameterMap>
-	<select id="getStock" parameterMap="stockMap" resultType="StockDTO">
+	<select id="getStockInfo" parameterMap="stockMap" resultType="StockDTO">
 		<![CDATA[
 		SELECT stock.id, stock.branch_id, stock.product_id, stock.sizelabel, stock.color, stock.quantity
 		FROM Stock, Product, Branch

@@ -2,7 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thehandsome.app.dao.BranchDAO">
-
+	<select id="getBranch" resultType="BranchDTO">
+		<![CDATA[
+			SELECT 	*
+			FROM 	BRANCH
+			WHERE 	DEPARTMENT_ID = #{department} AND BRAND_ID = #{brand}
+		]]>
+	</select>
+	<select id="getBranchDTO" resultType="BranchDTO">
+		<![CDATA[
+			SELECT 	*
+			FROM 	BRANCH
+			WHERE 	ID = #{id}
+		]]>
+	</select>
+	
 	<select id="getBranchList" resultType="BranchDTO">
 		<![CDATA[
 		SELECT id, department_id, brand_id
